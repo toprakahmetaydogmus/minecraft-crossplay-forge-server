@@ -2761,7 +2761,7 @@ class AdminGuiApp:
 
             if is_online:
                 self.root.after(0, lambda: self.status_lbl.configure(text="● SUNUCU AKTİF (PORT 25565)", fg=self.ACCENT_GREEN, bg="#064e3b"))
-                if counter % 3 == 0:
+                if counter % 15 == 0:
                     try:
                         self.update_player_dropdown()
                     except Exception:

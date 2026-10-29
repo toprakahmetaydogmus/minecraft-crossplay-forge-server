@@ -64,7 +64,7 @@ REM Eski kilit dosyasini temizle (Eger sunucu aniden kapandiysa)
 if exist "world\session.lock" del /f /q "world\session.lock" >nul 2>&1
 
 echo [*] Sunucu Jar: %SERVER_JAR%
-echo [*] Bellek: Min 1.5GB - Max 3GB (Ultra Hafif 3GB Aikar G1GC Optimize)
+echo [*] Bellek: Min 3GB - Max 6GB (High Performance 6GB Aikar G1GC Optimize)
 echo [*] Java Baglanti Portu: 25565 (TCP)
 echo [*] Bedrock Baglanti Portu: 19132 (UDP)
 echo.
@@ -72,24 +72,24 @@ echo Sunucu baslatiliyor... Kapatmak icin konsola 'stop' yaziniz.
 echo =====================================================================
 echo.
 
-REM 3. Optimize Aikar G1GC ve Modern Java Erisim Bayraklari (3GB RAM Optimize)
-"%JAVA_BIN%" -Xms1536M -Xmx3072M -Xshare:off ^
+REM 3. Optimize Aikar G1GC ve Modern Java Erisim Bayraklari (6GB RAM Optimize)
+"%JAVA_BIN%" -Xms3072M -Xmx6144M -Xshare:off ^
   --add-opens=java.base/java.lang=ALL-UNNAMED ^
   --add-opens=java.base/java.lang.invoke=ALL-UNNAMED ^
   --add-opens=java.base/java.lang.reflect=ALL-UNNAMED ^
   --add-opens=java.base/java.util=ALL-UNNAMED ^
   -XX:+UseG1GC ^
   -XX:+ParallelRefProcEnabled ^
-  -XX:MaxGCPauseMillis=200 ^
+  -XX:MaxGCPauseMillis=100 ^
   -XX:+UnlockExperimentalVMOptions ^
   -XX:+DisableExplicitGC ^
   -XX:+AlwaysPreTouch ^
-  -XX:G1NewSizePercent=20 ^
-  -XX:G1MaxNewSizePercent=30 ^
+  -XX:G1NewSizePercent=30 ^
+  -XX:G1MaxNewSizePercent=40 ^
   -XX:G1ReservePercent=15 ^
   -XX:G1HeapWastePercent=5 ^
   -XX:G1MixedGCCountTarget=4 ^
-  -XX:InitiatingHeapOccupancyPercent=20 ^
+  -XX:InitiatingHeapOccupancyPercent=45 ^
   -XX:G1MixedGCLiveThresholdPercent=90 ^
   -XX:G1RSetUpdatingPauseTimePercent=5 ^
   -XX:SurvivorRatio=32 ^

@@ -6,7 +6,7 @@
 
 alerts:
     # Oyunculara uyarı yayınlamanın yanı sıra, uyarılar konsola da gönderilmeli mi?
-    print-to-console: true
+    print-to-console: false
     # Bu, uyarıların proxy'nize bağlı sunucular arasında paylaşılıp paylaşılmayacağını/nasıl paylaşılacağını kontrol eder.
     # Velocity kullanılıyorsa, Velocity yapılandırmanızda 'bungee-plugin-message-channel' etkinleştirilmiş olmalıdır.
     proxy:
@@ -64,31 +64,16 @@ cancel-duplicate-packet: true
 ignore-duplicate-packet-rotation: false
 
 Simulation:
-    # Oyuncu meşru olduğunda toplam avantajı ne kadar çarpmalıyız?
-    # Varsayılan yapılandırma bu şekilde görünür (x ekseni = saniye, y ekseni = 1/1000 blok): https://www.desmos.com/calculator/d4ufgxrxer
     setback-decay-multiplier: 0.999
-    # Oyuncunun hareketinden ne kadar büyük bir sapma ihlal oluşturmalıyız?
-    # Mümkün olan hareketten blok cinsinden ölçülür
-    # Optifine için trig tablolarını değiştirerek hesaba katıyoruz, ancak bunu 0.001'e düşürmek FastMath'ı azaltır
-    # Bu telafi işe yaramazsa anticheat'i işaretle...
-    threshold: 0.001
-    # Bir tik içinde ne kadar büyük bir ihlal olmalı ki oyuncu hemen geri dönsün?
-    # Devre dışı bırakmak için -1 yazın
-    immediate-setback-threshold: 0.1
-    # Tüm tikler boyunca ne kadar büyük bir avantaja sahip olmalıyız ki geri dönüş yapmaya başlayalım?
-    # Devre dışı bırakmak için -1 yazın
-    max-advantage: 1
-    # Varsayılan config ile 50 saniye sonra, oyuncu 4 bloktan -> 1 bloğa kadar avantaj kazanır
-    # Bu, oyuncunun çok fazla ihlal biriktirmesini ve bunların hepsini temizleyememesini önlemek içindir
-    # Varsayılan avantaj tavanı (x ekseni = saniye, y ekseni = 1/1000 blok): https://www.desmos.com/calculator/4lovswdarj
-    max-ceiling: 4
-    # Geri alma için ihlal seviyesi eşiği
-    # Eski davranış için 1
-    setback-violation-threshold: 1
+    threshold: 0.05
+    immediate-setback-threshold: -1
+    max-advantage: -1
+    max-ceiling: 10
+    setback-violation-threshold: 99999
 
 # Bir oyuncunun bir hareket sırasında bir bloğa girip girmediğini kontrol eder
 Phase:
-    setbackvl: 1 # Blokların içinde glitch yapmak duvara tırmanmaya izin verebilir, ayrıca bu kontrol nispeten stabildir
+    setbackvl: 15 # Lag durumunda kapı, çit veya yarım bloklarda geri atılmayı önler
     decay: 0.005
 
 AirLiquidPlace:
@@ -113,9 +98,9 @@ NoSlow:
     # Ne kadar bir sapma "hile" olarak kabul edilir?
     # Varsayılan olarak bu, diğer sapmalardan daha düşüktür
     # NoSlow açıkken 0.03-0.2 aralığında sürekli olarak uyarı verir
-    threshold: 0.001
+    threshold: 0.005
     # NoSlow'un sağladığı avantajı ortadan kaldırmak için ilk itemi hızlı bir şekilde geri alın
-    setbackvl: 5
+    setbackvl: 99999
     # Oyuncu bir eşya kullandığında VE onun tarafından yavaşlatıldığında beklenilen zaman
     decay: 0.05
 
@@ -124,41 +109,38 @@ Knockback:
     setback-decay-multiplier: 0.999
     # Oyuncunun hızından ne kadar büyük bir sapma ihlal oluşturmalıyız?
     # Mümkün olan hızdan blok cinsinden ölçülür
-    threshold: 0.001
+    threshold: 0.01
     # Bir tik içinde ne kadar büyük bir ihlal olmalı ki oyuncu hemen geri dönsün?
     # Devre dışı bırakmak için -1 yazın
-    immediate-setback-threshold: 0.1
+    immediate-setback-threshold: -1
     # Tüm tikler boyunca ne kadar büyük bir avantaja sahip olmalıyız ki geri dönüş yapmaya başlayalım?
     # Devre dışı bırakmak için -1 yazın
-    max-advantage: 1
+    max-advantage: -1
     # Bu, oyuncunun çok fazla ihlal toplamasını ve asla hepsini temizleyememesini engellemek içindir
-    max-ceiling: 4
+    max-ceiling: 10
 
 Explosion:
-    threshold: 0.001
-    setbackvl: 3
+    threshold: 0.01
+    setbackvl: 99999
 
 TimerA:
-    setbackvl: 10
+    setbackvl: 99999
     # Oyuncunun geri kaldığında biriktirebileceği milisaniye miktarı
-    # Çok yüksek ayarlandığında 1.8 hızlı kullanma/hızlı iyileşme/hızlı yay atlama durumlarına izin verebilir, 120 ms iyi bir denge gibi görünüyor
-    drift: 120
+    drift: 500
 
 # This check limits abuse of the TimerA balance by preventing the player's movement falling too far behind realtime
 TimerLimit:
-    # Kontrolün zamanlayıcı dengesini sınırlamaya başlayacağı ping değeri, kötüye kullanımı önlemek için.
-    # Bu, yalnızca bu ping eşiğini aşan meşru oyuncular için bazı geri dönüşlere neden olabilir.
     # Devre dışı bırakmak için -1 yazın
-    ping-abuse-limit-threshold: 1000
+    ping-abuse-limit-threshold: -1
 
 NegativeTimer:
     # Uyarı vermeye başlamadan önce hareket halindeyken kaybedilen milisaniye sayısı
-    drift: 1200
+    drift: 5000
 
     # TimerA ile aynı kontrol yöntemi, ancak araçlar için
 VehicleTimer:
     # Hedef 1.005 timer
-    setbackvl: 10
+    setbackvl: 99999
 
 PacketOrderI:
     # Oyuncular 1.7 animasyon modlarını kullandıkları için işaretleniyorsa etkinleştirin

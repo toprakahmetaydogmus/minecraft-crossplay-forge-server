@@ -28,14 +28,14 @@ settings:
       max: 2048.0
     attackDamage:
       max: 2048.0
-  save-user-cache-on-stop-only: false
-  moved-too-quickly-multiplier: 10.0
+  save-user-cache-on-stop-only: true
+  moved-too-quickly-multiplier: 50.0
   moved-wrongly-threshold: 0.0625
   bungeecord: false
 commands:
   spam-exclusions:
   - /skill
-  silent-commandblock-console: false
+  silent-commandblock-console: true
   log: true
   tab-complete: 0
   send-namespaced: true
