@@ -15,5 +15,5 @@
 	#Teleport all drops to the player/first block
 	teleportDrops = true
 	#Enable tool durability protection (Master Switch)
-	enableToolProtection = true
+	enableToolProtection = false
 

@@ -28,13 +28,165 @@ os.makedirs(WORLD_STRUCTURES_DIR, exist_ok=True)
 
 
 # =============================================================================
+# SPONGE & MCEDIT SCHEMATIC NATIVE PARSER & GREEDY 3D MESHER
+# =============================================================================
+def parse_schematic_to_commands(filepath, center_origin=True, offset_y=0):
+    """
+    Sponge (.schem), WorldEdit ve MCEdit (.schematic) dosyalarını nbtlib ile okur,
+    1.20.1 için blok eşlemelerini yapar ve 3D greedy box mesher ile minimum
+    sayıda optimize /fill ve /setblock komutuna dönüştürür.
+    """
+    try:
+        schem = nbtlib.load(filepath)
+    except Exception as e:
+        raise ValueError(f"Şematik dosyası okunamadı: {e}")
+
+    s_obj = schem.get('Schematic', schem) if 'Schematic' in schem else schem
+    w = int(s_obj.get('Width', 0))
+    h = int(s_obj.get('Height', 0))
+    l = int(s_obj.get('Length', 0))
+
+    if w == 0 or h == 0 or l == 0:
+        raise ValueError("Geçersiz şematik boyutları: 0x0x0")
+
+    raw_bd = s_obj.get('BlockData', [])
+    bd = [int(b) & 0xff for b in raw_bd]
+
+    # VarInt çözümleme
+    varints = []
+    i, total_len = 0, len(bd)
+    while i < total_len:
+        v, s = 0, 0
+        while True:
+            b = bd[i]; i += 1; v |= (b & 0x7f) << s; s += 7
+            if (b & 0x80) == 0: break
+        varints.append(v)
+
+    palette_dict = s_obj.get('Palette', {})
+    id_to_state = {int(v): k for k, v in palette_dict.items()}
+
+    ox = -(w // 2) if center_origin else 0
+    oz = -(l // 2) if center_origin else 0
+
+    grid = {}
+    for y in range(h):
+        for z in range(l):
+            for x in range(w):
+                idx = (y * l + z) * w + x
+                if idx < len(varints):
+                    st = id_to_state.get(varints[idx], 'air')
+                    if st not in ('minecraft:air', 'air', 'minecraft:cave_air', 'cave_air', 'minecraft:void_air'):
+                        # 1.21+ blokları 1.20.1 uyumlu karşılıklarına eşle
+                        clean = st.replace('minecraft:', '').replace('pale_oak', 'dark_oak')
+                        grid[(x + ox, y + offset_y, z + oz)] = clean
+
+    # 3D Greedy Box Meshing
+    visited = set()
+    cmds = []
+    for (x, y, z), st in list(grid.items()):
+        if (x, y, z) in visited:
+            continue
+        
+        x2 = x
+        while (x2 + 1, y, z) in grid and grid[(x2 + 1, y, z)] == st and (x2 + 1, y, z) not in visited:
+            x2 += 1
+        
+        z2 = z
+        can_z = True
+        while can_z:
+            nz = z2 + 1
+            for xi in range(x, x2 + 1):
+                if (xi, y, nz) not in grid or grid[(xi, y, nz)] != st or (xi, y, nz) in visited:
+                    can_z = False
+                    break
+            if can_z: z2 = nz
+
+        y2 = y
+        can_y = True
+        while can_y:
+            ny = y2 + 1
+            for xi in range(x, x2 + 1):
+                for zi in range(z, z2 + 1):
+                    if (xi, ny, zi) not in grid or grid[(xi, ny, zi)] != st or (xi, ny, zi) in visited:
+                        can_y = False
+                        break
+                if not can_y: break
+            if can_y: y2 = ny
+
+        for xi in range(x, x2 + 1):
+            for yi in range(y, y2 + 1):
+                for zi in range(z, z2 + 1):
+                    visited.add((xi, yi, zi))
+
+        if x == x2 and y == y2 and z == z2:
+            cmds.append(f'execute at {{p}} run setblock ~{x} ~{y} ~{z} {st}')
+        else:
+            cmds.append(f'execute at {{p}} run fill ~{x} ~{y} ~{z} ~{x2} ~{y2} ~{z2} {st}')
+
+    return w, h, l, len(grid), cmds
+
+
+def execute_schematic_build_thread(rcon, filepath, player_name, offset_y=0, auto_clear=False, log_cb=None, on_done=None):
+    """
+    Şematik dosyasını arka planda parça parça RCON üzerinden sunucuya göndererek
+    dünyaya kesintisiz ve 20 TPS koruyarak inşa eder.
+    """
+    def _worker():
+        try:
+            bname = os.path.basename(filepath)
+            if log_cb:
+                log_cb(f"[*] '{bname}' şematiği analiz ediliyor ve 3D optimize ediliyor...")
+            w, h, l, solid_count, cmds = parse_schematic_to_commands(filepath, center_origin=True, offset_y=offset_y)
+            if log_cb:
+                log_cb(f"[✓] {w}x{h}x{l} boyutlarında {solid_count:,} blok, {len(cmds):,} optimize /fill komutuna dönüştürüldü.")
+
+            if auto_clear:
+                ox = (w // 2) + 2
+                oz = (l // 2) + 2
+                clear_cmd = f"execute at {player_name} run fill ~-{ox} ~-1 ~-{oz} ~{ox} ~-1 ~{oz} grass_block && execute at {player_name} run fill ~-{ox} ~ ~-{oz} ~{ox} ~{h+2} ~{oz} air"
+                rcon.send_command(clear_cmd)
+                if log_cb:
+                    log_cb("[*] İnşaat alanı düzlendi ve temizlendi.")
+
+            total = len(cmds)
+            import time
+            for idx, c in enumerate(cmds, 1):
+                formatted = c.replace("{p}", player_name)
+                rcon.send_command(formatted)
+                if idx % 50 == 0 or idx == total:
+                    pct = int((idx / total) * 100)
+                    if log_cb:
+                        log_cb(f"🏗️ [{bname}] İnşa ediliyor... %{pct} ({idx}/{total} komut)")
+                time.sleep(0.015)
+
+            rcon.send_command(f"execute at {player_name} run playsound minecraft:ui.toast.challenge_complete master {player_name}")
+            rcon.send_command(f"broadcast &6[MİMARİ] &e{player_name} &6{bname} &a(Ultra Lüks Malikane) &ainşa etti!")
+            rcon.send_command(f"execute at {player_name} run title {player_name} actionbar {{\"text\":\"🏰 {bname} Başarıyla İnşa Edildi!\",\"color\":\"green\",\"bold\":true}}")
+            if log_cb:
+                log_cb(f"🎉 [BAŞARILI] '{bname}' şematik yapısı ({w}x{h}x{l}) dünyaya eksiksiz inşa edildi!")
+            if on_done:
+                on_done()
+        except Exception as e:
+            if log_cb:
+                log_cb(f"❌ [HATA] Şematik inşaatı başarısız oldu: {e}")
+
+    threading.Thread(target=_worker, daemon=True).start()
+
+
+# =============================================================================
 # 13 AYRI SEKME İÇİN 160+ ZENGİN SCHEMATIC MİMARİ VERİTABANI (TABS_DATA)
 # =============================================================================
+LUXURY_VILLA_FILE = os.path.join(SCHEMATICS_DIR, "luxury-villa.schem")
+
 SCHEMATIC_TABS = {
     # -------------------------------------------------------------------------
     # 1. 🏛️ SCHEMATIC VERİ SETİ (rom1504 Dataset) - ANA KONTROL VE EN SEÇKİN YAPILAR
     # -------------------------------------------------------------------------
     "🏛️ SCHEMATIC VERİ SETİ (rom1504 Dataset)": [
+        ("🏰 Ultra Lüks Modern Malikane (luxury-villa.schem 51x19x32 Havuzlu & Teraslı)",
+         f"__SCHEM_FILE__:{LUXURY_VILLA_FILE}",
+         "51x19x32 Blok | 8,284 Bloklu Gerçek Malikane | Kullanıcının masaüstünden yüklediği lüks cam villa, yüzme havuzlu, teraslı ve tam mobilyalı"),
+
         ("🏡 Modern Cam & Kuvars Lüks Villa (Havuzlu, Balkonlu, Teraslı)",
          "execute at {p} run fill ~-5 ~-1 ~-5 ~5 ~-1 ~5 smooth_quartz && execute at {p} run fill ~-5 ~ ~-5 ~5 ~5 ~5 air && execute at {p} run fill ~-5 ~ ~-5 ~5 ~4 ~5 tinted_glass outline && execute at {p} run fill ~-5 ~5 ~-5 ~5 ~5 ~5 smooth_quartz && execute at {p} run fill ~-4 ~ ~-4 ~4 ~4 ~4 air && execute at {p} run setblock ~ ~-1 ~ sea_lantern && execute at {p} run setblock ~-4 ~-1 ~-4 sea_lantern && execute at {p} run setblock ~4 ~-1 ~4 sea_lantern && execute at {p} run setblock ~-3 ~ ~-4 chest && execute at {p} run setblock ~-2 ~ ~-4 crafting_table && execute at {p} run setblock ~-1 ~ ~-4 blast_furnace && execute at {p} run setblock ~-4 ~ ~3 cyan_bed && execute at {p} run fill ~-1 ~ ~-5 ~1 ~1 ~-5 air && execute at {p} run setblock ~ ~ ~-5 oak_door[half=lower,facing=north] && execute at {p} run setblock ~ ~1 ~-5 oak_door[half=upper,facing=north] && execute at {p} run fill ~-3 ~-2 ~-9 ~3 ~-1 ~-6 smooth_stone && execute at {p} run fill ~-2 ~-2 ~-8 ~2 ~-1 ~-7 water && playsound minecraft:ui.toast.challenge_complete master {p} ~ ~ ~ 1 1 && title {p} actionbar {\"text\":\"🏗️ Modern Cam Villa Başarıyla İnşa Edildi!\",\"color\":\"green\",\"bold\":true}",
          "14x9x14 Blok | rom1504:modern_villa_01 | Kuvars tabanlı, 2 katlı lüks cam villa, yüzme havuzlu ve mobilyalı"),
@@ -84,6 +236,10 @@ SCHEMATIC_TABS = {
     # 2. 🏡 EVLER, VİLLALAR & MALİKANELER (Houses, Modern Villas & Mansions)
     # -------------------------------------------------------------------------
     "🏡 EVLER, VİLLALAR & MALİKANELER": [
+        ("🏰 Ultra Lüks Modern Malikane (luxury-villa.schem 51x19x32 Havuzlu & Teraslı)",
+         f"__SCHEM_FILE__:{LUXURY_VILLA_FILE}",
+         "51x19x32 Blok | 8,284 Bloklu Gerçek Malikane | Kullanıcının masaüstünden yüklediği lüks cam villa, yüzme havuzlu, teraslı ve tam mobilyalı"),
+
         ("🏡 2 Katlı Lüks Cam & Havuzlu Villa",
          "execute at {p} run fill ~-5 ~-1 ~-5 ~5 ~-1 ~5 smooth_quartz && execute at {p} run fill ~-5 ~ ~-5 ~5 ~5 ~5 air && execute at {p} run fill ~-5 ~ ~-5 ~5 ~4 ~5 tinted_glass outline && execute at {p} run fill ~-5 ~5 ~-5 ~5 ~5 ~5 smooth_quartz && execute at {p} run fill ~-4 ~ ~-4 ~4 ~4 ~4 air && execute at {p} run setblock ~ ~-1 ~ sea_lantern && execute at {p} run setblock ~-4 ~-1 ~-4 sea_lantern && execute at {p} run setblock ~4 ~-1 ~4 sea_lantern && execute at {p} run setblock ~-3 ~ ~-4 chest && execute at {p} run setblock ~-2 ~ ~-4 crafting_table && execute at {p} run setblock ~-1 ~ ~-4 furnace && execute at {p} run setblock ~-4 ~ ~3 red_bed && execute at {p} run fill ~-1 ~ ~-5 ~1 ~1 ~-5 air && execute at {p} run setblock ~ ~ ~-5 oak_door[half=lower,facing=north] && execute at {p} run setblock ~ ~1 ~-5 oak_door[half=upper,facing=north] && execute at {p} run fill ~-3 ~-2 ~-9 ~3 ~-1 ~-6 smooth_stone && execute at {p} run fill ~-2 ~-2 ~-8 ~2 ~-1 ~-7 water && playsound minecraft:block.anvil.use master {p} ~ ~ ~ 1 1",
          "Kuvars zeminli, cam duvarlı, çift kişilik yataklı, fırınlı ve önünde havuzlu tam modern villa"),
@@ -1040,21 +1196,46 @@ class SchematicsStudioUI:
         data = self.preset_map[sel_name]
         cmd = data["cmd"]
 
-        # Y ofseti ekle
         try:
             offset_y = int(self.height_offset_var.get().strip())
         except Exception:
             offset_y = 0
 
+        auto_clr = bool(self.auto_clear_var.get())
+
+        if cmd.startswith("__SCHEM_FILE__:"):
+            schem_path = cmd.split("__SCHEM_FILE__:", 1)[1]
+            rcon = self.rcon_getter()
+            if not rcon:
+                messagebox.showerror("RCON Hatası", "RCON bağlantısı aktif değil. Lütfen sunucunun açık olduğundan emin olun.")
+                return
+
+            p = "@p"
+            log_fn = None
+            if hasattr(self, "parent_cards_frame") and hasattr(self.parent_cards_frame, "master"):
+                p_var = getattr(self.parent_cards_frame.master, "player_var", None)
+                if p_var:
+                    p = p_var.get().strip() or "@p"
+                log_fn = getattr(self.parent_cards_frame.master, "log_console", None)
+
+            execute_schematic_build_thread(
+                rcon=rcon,
+                filepath=schem_path,
+                player_name=p,
+                offset_y=offset_y,
+                auto_clear=auto_clr,
+                log_cb=lambda msg: log_fn(msg + "\n", "cmd") if log_fn else print(msg)
+            )
+            return
+
+        # Standart komut
         if offset_y != 0 and "~" in cmd:
             cmd = cmd.replace("~ ", f"~{offset_y} ")
 
-        # Temizleme kodu gerekiyorsa
-        if self.auto_clear_var.get():
+        if auto_clr:
             cmd = "execute at {p} run fill ~-8 ~-1 ~-8 ~8 ~-1 ~8 grass_block && execute at {p} run fill ~-8 ~ ~-8 ~8 ~10 ~8 air && " + cmd
 
         self.last_built_box = (-10, -1, -10, 10, 15, 10)
-
         if self.on_build_callback:
             self.on_build_callback(cmd)
 
@@ -1089,11 +1270,12 @@ class SchematicsStudioUI:
     def _import_from_disk(self):
         filetypes = [
             ("Minecraft Şematik Dosyaları", "*.nbt;*.schem;*.schematic;*.litematic"),
-            ("NBT Dosyası", "*.nbt"),
-            ("Schematic Dosyası", "*.schem;*.schematic"),
+            ("Sponge Schematic", "*.schem"),
+            ("NBT Yapı Dosyası", "*.nbt"),
+            ("MCEdit Schematic", "*.schematic"),
             ("Tüm Dosyalar", "*.*")
         ]
-        fpath = filedialog.askopenfilename(title="Şematik Dosyası Seç (.nbt, .schem)", filetypes=filetypes)
+        fpath = filedialog.askopenfilename(title="Şematik Dosyası Seç (.schem, .schematic, .nbt)", filetypes=filetypes)
         if not fpath:
             return
 
@@ -1101,19 +1283,30 @@ class SchematicsStudioUI:
         dest = os.path.join(SCHEMATICS_DIR, bname)
         try:
             shutil.copy2(fpath, dest)
-            # Eğer nbt ise world generated structures'a da ekle
-            if bname.endswith(".nbt"):
-                shutil.copy2(fpath, os.path.join(WORLD_STRUCTURES_DIR, bname))
+            try:
+                w, h, l, solid, _ = parse_schematic_to_commands(dest, center_origin=True)
+                dims_str = f"{w}x{h}x{l} | {solid:,} Blok"
+            except Exception:
+                dims_str = "Özel Şematik"
 
-            cmd = f"execute at {{p}} run structure load {os.path.splitext(bname)[0]} ~ ~ ~ none none true 1.0"
-            btn_title = f"📂 {bname} (Özel Yüklenen)"
+            cmd = f"__SCHEM_FILE__:{dest}"
+            btn_title = f"📂 {bname} ({dims_str})"
+            desc = f"Kullanıcı tarafından yüklenen şematik: {bname} ({dims_str}) - Otomatik 3D greedy mesher ile optimize edildi."
+
             SCHEMATIC_TABS["🏛️ SCHEMATIC VERİ SETİ (rom1504 Dataset)"].insert(
-                0, (btn_title, cmd, f"Kullanıcı tarafından yüklenen şematik: {bname}")
+                0, (btn_title, cmd, desc)
             )
+            if "🏡 EVLER, VİLLALAR & MALİKANELER" in SCHEMATIC_TABS:
+                SCHEMATIC_TABS["🏡 EVLER, VİLLALAR & MALİKANELER"].insert(
+                    0, (btn_title, cmd, desc)
+                )
+
             self._populate_preset_list()
-            messagebox.showinfo("Başarılı", f"'{bname}' başarıyla şematik stüdyosuna eklendi!")
+            self.selected_preset_var.set(btn_title)
+            self._on_preset_selected()
+            messagebox.showinfo("Başarılı", f"'{bname}' ({dims_str}) başarıyla şematik stüdyosuna eklendi!\nŞimdi '🏗️ ŞEMATİK YAPIYI DÜNYAYA İNŞA ET' butonuna basarak inşa edebilirsiniz.")
         except Exception as e:
-            messagebox.showerror("Hata", f"Dosya kopyalama hatası: {e}")
+            messagebox.showerror("Hata", f"Dosya işleme hatası: {e}")
 
     def _sync_online_dataset(self):
         messagebox.showinfo(

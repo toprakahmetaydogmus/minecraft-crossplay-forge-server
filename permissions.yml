@@ -39,6 +39,22 @@ server.default:
     griefprevention.createclaims: true
     griefprevention.buyclaimblocks: true
     griefprevention.sellclaimblocks: true
+    grim.nomodifypacket: true
+    grim.exempt.*: true
+    grim.exempt.fastbreak: true
+    grim.exempt.fast_break: true
+    grim.exempt.break: true
+    grim.exempt.multibreak: true
+    grim.exempt.farbreak: true
+    grim.exempt.noswingbreak: true
+    grim.exempt.airliquidbreak: true
+    grim.exempt.positionbreaka: true
+    grim.exempt.positionbreakb: true
+    grim.exempt.rotationbreak: true
+    grim.exempt.wrongbreak: true
+    grim.exempt.invalidbreak: true
+    grim.alerts: false
+    grim.nosetback: true
     essentials.vanish: false
     essentials.vanish.*: false
     essentials.vanish.see: false

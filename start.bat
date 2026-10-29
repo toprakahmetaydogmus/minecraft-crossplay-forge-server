@@ -11,19 +11,19 @@ echo.
 set SERVER_DIR=%~dp0
 cd /d "%SERVER_DIR%"
 
-REM 1. Java Ortami Tespiti (Java 21 / Java 17)
+REM 1. Java Ortami Tespiti (Forge 1.20.1 & Arclight icin Java 17 Zorunludur)
 set "JAVA_BIN="
-if exist "C:\Program Files\Eclipse Adoptium\java-runtime-delta\bin\java.exe" (
-    set "JAVA_BIN=C:\Program Files\Eclipse Adoptium\java-runtime-delta\bin\java.exe"
-    echo [*] Sistemdeki Optimize Java 21 LTS tespit edildi.
-) else if exist "%SERVER_DIR%java17\bin\java.exe" (
+if exist "%SERVER_DIR%java17\bin\java.exe" (
     set "JAVA_BIN=%SERVER_DIR%java17\bin\java.exe"
-    echo [*] Dahili Adoptium Temurin Java 17 kullaniliyor.
+    echo [*] Dahili Adoptium Temurin Java 17 LTS kullaniliyor.
 ) else if defined JAVA_HOME (
     if exist "%JAVA_HOME%\bin\java.exe" (
         set "JAVA_BIN=%JAVA_HOME%\bin\java.exe"
         echo [*] JAVA_HOME uzerinden Java kullaniliyor.
     )
+) else if exist "C:\Program Files\Eclipse Adoptium\java-runtime-delta\bin\java.exe" (
+    set "JAVA_BIN=C:\Program Files\Eclipse Adoptium\java-runtime-delta\bin\java.exe"
+    echo [*] Sistemdeki Java kullaniliyor.
 )
 
 if "%JAVA_BIN%"=="" (

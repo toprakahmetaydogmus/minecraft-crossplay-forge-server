@@ -2561,6 +2561,24 @@ class AdminGuiApp:
             return
 
         target = self.player_var.get().strip() or "@p"
+
+        # Şematik dosyası veya luxury-villa kontrolü
+        if cmd_template.startswith("__SCHEM_FILE__:") or "luxury-villa" in cmd_template:
+            schem_path = os.path.join(SERVER_DIR, "schematics", "luxury-villa.schem")
+            if cmd_template.startswith("__SCHEM_FILE__:"):
+                schem_path = cmd_template.split("__SCHEM_FILE__:", 1)[1]
+            if schematics_manager and hasattr(schematics_manager, "execute_schematic_build_thread"):
+                self.log_console(f"[*] Şematik algılandı ({os.path.basename(schem_path)}). 3D greedy optimize inşaat başlatılıyor -> {target}...\n", tag="info")
+                schematics_manager.execute_schematic_build_thread(
+                    rcon=self.rcon,
+                    filepath=schem_path,
+                    player_name=target,
+                    offset_y=0,
+                    auto_clear=False,
+                    log_cb=lambda msg: self.root.after(0, self.log_console, msg + "\n", "cmd")
+                )
+                return
+
         qty = self.qty_var.get().strip() or "64"
         akce = getattr(self, "akce_var", None).get().strip() if getattr(self, "akce_var", None) else "50000"
         if not akce:
@@ -2590,6 +2608,26 @@ class AdminGuiApp:
         self.history_index = len(self.command_history)
         self.cmd_var.set("")
         self.log_console(f">> {raw_cmd}\n", tag="cmd")
+
+        # structure load luxury-villa veya luxury-villa manuel yazıldığında 3D greedy inşaatı tetikle
+        if "luxury-villa" in raw_cmd or "luxury_villa" in raw_cmd or "structure load" in raw_cmd:
+            schem_path = os.path.join(SERVER_DIR, "schematics", "luxury-villa.schem")
+            target = self.player_var.get().strip() or "@p"
+            m = re.search(r'execute\s+at\s+([A-Za-z0-9_]+)', raw_cmd)
+            if m:
+                target = m.group(1)
+            if schematics_manager and hasattr(schematics_manager, "execute_schematic_build_thread"):
+                self.log_console(f"[*] Şematik komutu algılandı ('{raw_cmd}'). 3D greedy optimize inşaat başlatılıyor -> {target}...\n", tag="info")
+                schematics_manager.execute_schematic_build_thread(
+                    rcon=self.rcon,
+                    filepath=schem_path,
+                    player_name=target,
+                    offset_y=0,
+                    auto_clear=False,
+                    log_cb=lambda msg: self.root.after(0, self.log_console, msg + "\n", "cmd")
+                )
+                return
+
         threading.Thread(target=self._run_cmd_async, args=(raw_cmd,), daemon=True).start()
 
     def _run_cmd_async(self, cmd):
@@ -2597,6 +2635,23 @@ class AdminGuiApp:
         for c in sub_cmds:
             if c.startswith("/"):
                 c = c[1:]
+            if "structure load luxury-villa" in c or "structure load luxury_villa" in c:
+                schem_path = os.path.join(SERVER_DIR, "schematics", "luxury-villa.schem")
+                target = self.player_var.get().strip() or "@p"
+                m = re.search(r'execute\s+at\s+([A-Za-z0-9_]+)', c)
+                if m:
+                    target = m.group(1)
+                if schematics_manager and hasattr(schematics_manager, "execute_schematic_build_thread"):
+                    schematics_manager.execute_schematic_build_thread(
+                        rcon=self.rcon,
+                        filepath=schem_path,
+                        player_name=target,
+                        offset_y=0,
+                        auto_clear=False,
+                        log_cb=lambda msg: self.root.after(0, self.log_console, msg + "\n", "cmd")
+                    )
+                    continue
+
             if c.startswith("give ") and ("{" in c or ":" in c):
                 c = "minecraft:" + c
             resp = self.rcon.send_command(c)
