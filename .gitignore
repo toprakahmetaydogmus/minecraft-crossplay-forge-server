@@ -79,6 +79,9 @@ __pycache__/
 env/
 venv/
 *.tmp
+build/
+dist/
+*.spec
 
 # Operating System Files
 .DS_Store
