@@ -116,6 +116,17 @@ def get_server_config():
 
 RCON_HOST, RCON_PORT, RCON_PASS, SERVER_PORT = get_server_config()
 
+def get_local_ip():
+    """Dynamically resolves the active local IP address without any hardcoding."""
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        s.close()
+        return ip
+    except Exception:
+        return "127.0.0.1"
+
 # =============================================================================
 # RCON İSTEMCİSİ (Thread-Safe, Auto-Reconnect)
 # =============================================================================
@@ -326,9 +337,35 @@ BLOCK_CATALOG = {
 # =============================================================================
 TABS_DATA = {
     # -------------------------------------------------------------------------
-    # 0. 🏢 MEGA PLAZALAR, GÖKDELENLER & İŞ MERKEZLERİ
+    # 0. 🚀 OTONOM SUNUCU KURUCU, TÜNELLER & AI MÜHENDİSİ
     # -------------------------------------------------------------------------
-        # -------------------------------------------------------------------------
+    "🚀 OTONOM SUNUCU KURUCU & AI MÜHENDİSİ": [
+        ("🚀 Auto Server Maker & AI Suite Aç",
+         "__LAUNCH_AUTO_BUILDER__",
+         "163+ sürümde otonom sunucu kurucu, Modrinth mod indirici ve AI çökme doktorunu ayrı pencerede açar"),
+
+        ("🌐 Playit.gg Portsuz Tünel Başlat",
+         "__LAUNCH_PLAYIT_TUNNEL__",
+         "Modem portu açmadan tek tıkla arkadaşlarınızla oynamak için Playit.gg ve UPnP tünellerini yönetir"),
+
+        ("🤖 Yerel AI Çökme Teşhisi (Crash Doctor)",
+         "__RUN_CRASH_DOCTOR__",
+         "Sunucu loglarını (latest.log) tarar, çakışan modları ve hataları yapay zeka ile teşhis edip açıklar"),
+
+        ("📊 Canlı Donanım Telemetrisi (CPU / RAM)",
+         "__SHOW_HARDWARE_METRICS__",
+         "İşlemci ve bellek kullanımını gerçek zamanlı konsola yazdırır"),
+
+        ("📦 Modrinth Otomatik Mod İndirici",
+         "__LAUNCH_AUTO_BUILDER__",
+         "1.20.1 Forge ve diğer tüm sürümler için popüler modları tek tıkla indirip sunucuya kurar"),
+
+        ("☕ Java Ortamı & Sürüm Denetleyicisi",
+         "__LAUNCH_AUTO_BUILDER__",
+         "Sistemdeki Java sürümlerini tarar, Java 25 çökme korumasını doğrular ve Java 17 çalışma ortamını sağlar")
+    ],
+
+    # -------------------------------------------------------------------------
     # 0.1 🏘️ DEV KASABALAR, KÖYLER & ŞEHİRLER (Canlı Köy & Kasaba İnşası)
     # -------------------------------------------------------------------------
     "🏘️ DEV KASABALAR, KÖYLER & ŞEHİRLER": [
@@ -1508,7 +1545,7 @@ class AdminGuiApp:
 
         ip_lbl = tk.Label(
             header,
-            text="🌐 Radmin: 26.92.128.177 | Yerel: 192.168.1.3 | Port: 25565",
+            text=f"🌐 Yerel Ağ: {get_local_ip()} | Port: {SERVER_PORT}",
             font=("Segoe UI", 8, "bold"),
             fg=self.ACCENT_CYAN,
             bg=self.BG_PANEL
@@ -1544,6 +1581,21 @@ class AdminGuiApp:
             command=self.start_server
         )
         btn_start.pack(side=tk.RIGHT, padx=3)
+
+        btn_builder = tk.Button(
+            header,
+            text="🚀 Auto Server Maker & AI Hub",
+            font=("Segoe UI", 8, "bold"),
+            bg="#0284c7",
+            fg="white",
+            activebackground="#0369a1",
+            activeforeground="white",
+            relief=tk.FLAT,
+            padx=10,
+            pady=2,
+            command=self.open_auto_server_maker
+        )
+        btn_builder.pack(side=tk.RIGHT, padx=5)
 
     # =========================================================================
     # HIZLI KONTROL & AKSIYON ÇUBUĞU (Quick Action Ribbon)
@@ -2439,7 +2491,75 @@ class AdminGuiApp:
         )
         btn_send.pack(side=tk.RIGHT)
 
+    def open_auto_server_maker(self):
+        """Otomatik Sunucu Kurucu, AI Asistanı & Tünel Yöneticisini Başlatır"""
+        try:
+            builder_py = os.path.join(SERVER_DIR, "auto_server_maker.py")
+            if os.path.exists(builder_py):
+                subprocess.Popen([sys.executable, builder_py], cwd=SERVER_DIR)
+                self.log_console("🚀 [Auto Server Maker & AI Hub] Yeni pencerede başlatıldı!\n", tag="success")
+            else:
+                messagebox.showerror("Hata", f"auto_server_maker.py bulunamadı:\n{builder_py}")
+        except Exception as e:
+            messagebox.showerror("Hata", f"Başlatılamadı: {e}")
+
+    def show_hardware_metrics(self):
+        """Shows live system telemetry in console"""
+        try:
+            from core.hardware_monitor import HardwareMonitor
+            m = HardwareMonitor.get_system_metrics()
+            msg = (
+                f"\n📊 --- CANLI SİSTEM & DONANIM TELEMETRİSİ ---\n"
+                f" İŞLEMCİ (CPU): %{m.get('cpu_percent', 0.0)}\n"
+                f" BELLEK (RAM) : {m.get('ram_used_gb', 0)} GB / {m.get('ram_total_gb', 0)} GB (%{m.get('ram_percent', 0)})\n"
+                f" BOŞ RAM      : {m.get('ram_free_gb', 0)} GB | BOŞ DİSK: {m.get('disk_free_gb', 0)} GB\n"
+                f"----------------------------------------------\n"
+            )
+            self.log_console(msg, tag="success")
+        except Exception as e:
+            self.log_console(f"Donanım telemetrisi alınamadı: {e}\n", tag="error")
+
+    def run_crash_doctor(self):
+        """Analyzes latest.log or crash reports using local AI diagnostics"""
+        self.log_console("🤖 [Crash Doctor] Sunucu logları ve çökme raporları taranıyor...\n", tag="cmd")
+        def _worker():
+            try:
+                log_file = os.path.join(SERVER_DIR, "logs", "latest.log")
+                content = ""
+                if os.path.exists(log_file):
+                    with open(log_file, "r", encoding="utf-8", errors="replace") as f:
+                        lines = f.readlines()
+                        content = "".join(lines[-150:])
+                
+                from core.ai_engineer import AIEngineer
+                from core.config_manager import ConfigManager
+                cfg = ConfigManager()
+                ai = AIEngineer(cfg)
+                prompt = (
+                    "Aşağıdaki Minecraft Forge 1.20.1 sunucu loglarını incele. "
+                    "Herhangi bir çakışma, hata, RAM yetersizliği veya çökme var mı? "
+                    "Tespitlerini ve çözüm adımlarını net Türkçe olarak açıkla:\n\n" + (content or "Log dosyası temiz veya sunucu sorunsuz çalışıyor.")
+                )
+                diagnosis = ai.ask(prompt)
+                self.root.after(0, self.log_console, f"\n🩺 [AI CRASH DOCTOR TEŞHİS RAPORU]:\n{diagnosis}\n\n", "success")
+            except Exception as e:
+                self.root.after(0, self.log_console, f"Crash Doctor hatası: {e}\n", "error")
+        threading.Thread(target=_worker, daemon=True).start()
+
     def run_custom_template(self, cmd_template):
+        if cmd_template == "__LAUNCH_AUTO_BUILDER__":
+            self.open_auto_server_maker()
+            return
+        elif cmd_template == "__RUN_CRASH_DOCTOR__":
+            self.run_crash_doctor()
+            return
+        elif cmd_template == "__SHOW_HARDWARE_METRICS__":
+            self.show_hardware_metrics()
+            return
+        elif cmd_template == "__LAUNCH_PLAYIT_TUNNEL__":
+            self.open_auto_server_maker()
+            return
+
         target = self.player_var.get().strip() or "@p"
         qty = self.qty_var.get().strip() or "64"
         akce = getattr(self, "akce_var", None).get().strip() if getattr(self, "akce_var", None) else "50000"

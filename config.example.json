@@ -1,0 +1,83 @@
+{
+  "server": {
+    "server_dir": ".",
+    "java_path": "java",
+    "min_ram_gb": 4,
+    "max_ram_gb": 6,
+    "server_type": "Forge",
+    "mc_version": "1.20.1",
+    "rcon_host": "127.0.0.1",
+    "rcon_port": 25575,
+    "rcon_password": "",
+    "server_port": 25565,
+    "bedrock_port": 19132,
+    "auto_eula": true,
+    "auto_backup_min": 15
+  },
+  "ai": {
+    "active_provider": "Ollama (Yerel/Ücretsiz)",
+    "active_model": "qwen2.5:1.5b",
+    "providers": {
+      "NVIDIA NIM": {
+        "api_key": "",
+        "base_url": "https://integrate.api.nvidia.com/v1",
+        "default_model": "meta/llama-3.1-70b-instruct"
+      },
+      "OpenRouter": {
+        "api_key": "",
+        "base_url": "https://openrouter.ai/api/v1",
+        "default_model": "meta-llama/llama-3.1-8b-instruct:free"
+      },
+      "OpenAI": {
+        "api_key": "",
+        "base_url": "https://api.openai.com/v1",
+        "default_model": "gpt-4o-mini"
+      },
+      "Anthropic": {
+        "api_key": "",
+        "base_url": "https://api.anthropic.com/v1",
+        "default_model": "claude-3-5-sonnet-20241022"
+      },
+      "Google Gemini": {
+        "api_key": "",
+        "base_url": "https://generativelanguage.googleapis.com/v1beta",
+        "default_model": "gemini-1.5-flash"
+      },
+      "Groq": {
+        "api_key": "",
+        "base_url": "https://api.groq.com/openai/v1",
+        "default_model": "llama-3.3-70b-versatile"
+      },
+      "Mistral AI": {
+        "api_key": "",
+        "base_url": "https://api.mistral.ai/v1",
+        "default_model": "mistral-large-latest"
+      },
+      "Together AI": {
+        "api_key": "",
+        "base_url": "https://api.together.xyz/v1",
+        "default_model": "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo"
+      },
+      "Perplexity": {
+        "api_key": "",
+        "base_url": "https://api.perplexity.ai",
+        "default_model": "sonar"
+      },
+      "Cohere": {
+        "api_key": "",
+        "base_url": "https://api.cohere.ai/v1",
+        "default_model": "command-r-plus"
+      },
+      "DeepSeek": {
+        "api_key": "",
+        "base_url": "https://api.deepseek.com/v1",
+        "default_model": "deepseek-chat"
+      },
+      "Ollama (Yerel/Ücretsiz)": {
+        "api_key": "ollama_local",
+        "base_url": "http://localhost:11434/v1",
+        "default_model": "llama3"
+      }
+    }
+  }
+}

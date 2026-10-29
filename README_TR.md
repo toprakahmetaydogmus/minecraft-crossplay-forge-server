@@ -60,10 +60,25 @@ Modlu, eklentili ve telefon/konsol destekli bir Minecraft sunucusu kurmak normal
   - 🤡 **Troll & Oyuncu Yönetimi**: Zindana atma, dondurma, roketleme, kafasına örs atma, envanter temizleme.
   - 🧹 **Anti-Lag & FPS Koruyucu**: Tek tıkla yerdeki çöpleri silme, TPS artırma, gamerule kalkanı.
 
-### 🛡️ 4. Sıfır Sızıntı & Gizlilik Mimarisi
-- **IP Sızıntısı Yok**: Özel ağ IP'leri ve tüneller açıkta bırakılmaz.
+### 🚀 4. Otonom Sunucu Kurucu, Portsuz Tüneller & Yerel AI Mühendisi
+- **163+ Sürümde Tek Tıkla Sunucu Kurulumu**: Forge, Fabric, NeoForge, Paper, Purpur, Arclight, Vanilla ve 2026 Game Drops.
+- **🌐 5 Motorlu Portsuz Tünel Yöneticisi**: Modem portu açmaya gerek kalmadan **Playit.gg**, **UPnP**, **Cloudflare** ve **ngrok** ile arkadaşlarınızla oynama imkanı.
+- **📦 Otonom Modrinth Mod İndirici**: Sıfır API Key ile doğrudan Modrinth CDN üzerinden güvenli `.jar` modlarını (`JEI`, `Mouse Tweaks`, `Better Combat`, `Create`, `FerriteCore`) otomatik kurar.
+- **🤖 Yapay Zekâ Çökme Teşhisi (Crash Doctor)**: Dahili 0ms çevrimdışı kural motoru + yerel Ollama LLM desteğiyle sunucu loglarını inceler, mod çakışmalarını ve RAM sorunlarını Türkçe teşhis eder.
+- **📊 Canlı Donanım Telemetrisi**: Gerçek zamanlı işlemci (CPU), bellek (RAM) ve disk kullanım grafikleri.
+
+### 🎭 5. Çevrimdışı Modda Küresel Skin Desteği (SkinsRestorer)
+- **SkinsRestorer v15.12.6**: `online-mode=false` ortamında hem Java hem Bedrock oyuncularının skinleri birbirine görünür.
+- **Oyun İçi Komutlar**:
+  - `/skin <KullanıcıAdı>`: İstediğiniz orijinal oyuncunun skinini anında giyin.
+  - `/skin url <PNG_URLsi>`: Özel skin resim linkini anında uygulayın.
+  - `/skins` veya `/skin menu`: Popüler skinlerin olduğu sandık GUI menüsünü açar.
+
+### 🛡️ 6. %100 Sıfır Sızıntı & Üst Düzey Güvenlik (Zero-Leak)
+- **IP Sızıntısı Yok**: Özel ağ IP'leri ve tüneller kod içinde asla statik tutulmaz, çalışma anında dinamik çözülür.
+- **Sıfır API Key Sızıntısı**: Tüm AI sağlayıcıları boş güvenli yuvalar (`api_key: ""`) veya ortam değişkenleri kullanır.
 - **Dinamik RCON Ayarı**: Şifreler `server.properties` veya `.env` üzerinden otomatik okunur.
-- **Güvenli `.gitignore`**: Oyuncu verileri, kayıtlı dünyalar ve log dosyaları asla GitHub'a sızmaz.
+- **Güvenli `.gitignore`**: Oyuncu UUID'leri, loglar, veritabanları, yerel yapılandırmalar asla GitHub'a sızmaz.
 
 ---
 

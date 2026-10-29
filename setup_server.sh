@@ -17,7 +17,7 @@ if ! command -v python3 &> /dev/null; then
     echo "[!] Python 3 not found. Please install python3 (e.g., sudo apt install python3 python3-pip)"
     exit 1
 fi
-python3 -m pip install -q --disable-pip-version-check nbtlib requests 2>/dev/null || true
+python3 -m pip install -q --disable-pip-version-check -r requirements.txt 2>/dev/null || true
 echo "[OK] Python dependencies ready."
 
 # 2. Java Check

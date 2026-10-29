@@ -60,10 +60,25 @@ Setting up a high-performance modded Minecraft server with cross-platform suppor
   - 🤡 **Troll & Player Moderation**: Freeze, cage, launch rocket, drop anvils, reset inventories.
   - 🧹 **Anti-Lag & Performance Watchdog**: Real-time entity wiper, TPS booster, gamerule shield.
 
-### 🛡️ 4. Zero-Leak Security & Privacy Architecture
+### 🚀 4. Autonomous Server Maker, Portless Tunneling & Local AI Hub
+- **1-Click Server Creation (163+ Versions)**: Forge, Fabric, NeoForge, Paper, Purpur, Arclight, Vanilla, and 2026 Game Drops.
+- **🌐 5-Engine Portless Tunneling**: Play with friends without port-forwarding using **Playit.gg**, **UPnP**, **Cloudflare**, and **ngrok**.
+- **📦 Autonomous Modrinth Mod Fetcher**: Download verified mods (`JEI`, `Mouse Tweaks`, `Better Combat`, `Create`, `FerriteCore`) directly from Modrinth CDN with zero API keys.
+- **🤖 AI Crash Doctor & Local Diagnostics**: Built-in 0ms offline expert engine + Ollama local LLM integration to automatically diagnose crash logs, conflicting mods, and memory issues.
+- **📊 Live Hardware Telemetry**: Real-time CPU usage, RAM allocation, and process monitoring.
+
+### 🎭 5. Global Skin Visibility in Offline Mode (SkinsRestorer)
+- **SkinsRestorer v15.12.6**: Both Java and Bedrock (crossplay) players can view, change, and customize skins in `online-mode=false`.
+- **In-Game Commands**:
+  - `/skin <PlayerName>`: Apply any official Minecraft skin instantly.
+  - `/skin url <SkinPNG_URL>`: Load custom skin directly from image URL.
+  - `/skins` or `/skin menu`: Interactive graphical chest GUI for browsing popular skins.
+
+### 🛡️ 6. Zero-Leak Security & Privacy Architecture (100% Zero-Leak)
 - **No Hardcoded IPs**: Local network interfaces and tunnels are never exposed or committed.
+- **Zero API Key Leaks**: All cloud AI providers use isolated environment variables or empty vault slots (`api_key: ""`).
 - **Dynamic Credentials**: RCON passwords and ports are dynamically read from `server.properties` or environment variables (`.env`).
-- **Comprehensive `.gitignore`**: All personal player UUIDs, logs, databases, and world save files are strictly ignored.
+- **Comprehensive `.gitignore`**: All personal player UUIDs, logs, databases, local IP bindings, and world save files are strictly blocked.
 
 ---
 

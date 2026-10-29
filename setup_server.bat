@@ -24,8 +24,8 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
-echo [*] Python tespit edildi. Gerekli kutuphaneler yukleniyor (nbtlib, requests)...
-python -m pip install -q --disable-pip-version-check nbtlib requests >nul 2>&1
+echo [*] Python tespit edildi. Gerekli kutuphaneler yukleniyor (customtkinter, psutil, nbtlib, requests)...
+python -m pip install -q --disable-pip-version-check -r requirements.txt >nul 2>&1
 echo [OK] Python paketleri hazir!
 echo.
 

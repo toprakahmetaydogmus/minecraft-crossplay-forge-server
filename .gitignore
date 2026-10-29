@@ -44,14 +44,23 @@ plugins/**/*.bin
 plugins/**/*.db
 plugins/**/cache/
 plugins/**/skincache.yml
+plugins/SkinsRestorer/players/
+plugins/SkinsRestorer/cooldowns/
+plugins/SkinsRestorer/skins/
 plugins/bStats/
 plugins/PluginMetrics/
 
 # Server RCON, Secret Keys & Local Configs
 .env
+config.json
 playit.toml
 playit.gg
 playit-*.exe
+cloudflared-*.exe
+ngrok*.exe
+tools/
+app_crash.log
+crash_reason.log
 
 # Large Runtimes and Heavy Binary Jars (Provided via 2-min auto-installer)
 java17/
