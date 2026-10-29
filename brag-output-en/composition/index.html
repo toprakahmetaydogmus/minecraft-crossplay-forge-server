@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Minecraft Crossplay Server & Admin Panel</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --bg-dark: #090d16;
+        --bg-card: #0f172a;
+        --bg-card-alt: #1e293b;
+        --border-glow: #38bdf8;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --accent-cyan: #38bdf8;
+        --accent-emerald: #10b981;
+        --accent-gold: #f59e0b;
+        --accent-purple: #a855f7;
+        --accent-rose: #f43f5e;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html, body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--bg-dark);
+        color: var(--text-main);
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      }
+      #root {
+        width: 1920px;
+        height: 1080px;
+        position: relative;
+        background: radial-gradient(circle at 50% 50%, #172554 0%, #090d16 80%);
+      }
+
+      /* Audio */
+      audio { display: none; }
+
+      /* Scene Container */
+      .scene {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1920px;
+        height: 1080px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      /* Scene 1: The Hook */
+      .terminal-box {
+        width: 900px;
+        background: #020617;
+        border: 1px solid #334155;
+        border-radius: 12px;
+        padding: 24px 30px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        font-family: monospace;
+        font-size: 20px;
+        color: #94a3b8;
+        margin-bottom: 30px;
+      }
+      .term-bar {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+      .dot { width: 12px; height: 12px; border-radius: 50%; }
+      .dot-red { background: #ef4444; }
+      .dot-yellow { background: #eab308; }
+      .dot-green { background: #22c55e; }
+      .hook-title {
+        font-size: 64px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        text-align: center;
+        color: #ffffff;
+        text-shadow: 0 0 40px rgba(56, 189, 248, 0.5);
+      }
+      .hook-sub {
+        font-size: 28px;
+        color: var(--accent-cyan);
+        margin-top: 14px;
+      }
+
+      /* Scene 2: The Reveal */
+      .panel-hero {
+        width: 1300px;
+        background: rgba(15, 23, 42, 0.95);
+        border: 2px solid var(--accent-cyan);
+        border-radius: 20px;
+        box-shadow: 0 0 60px rgba(56, 189, 248, 0.35);
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+      .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #334155;
+        padding-bottom: 18px;
+      }
+      .panel-title {
+        font-size: 36px;
+        font-weight: 800;
+        color: var(--accent-gold);
+      }
+      .panel-badge {
+        background: #064e3b;
+        color: #34d399;
+        font-size: 18px;
+        font-weight: 700;
+        padding: 8px 18px;
+        border-radius: 9999px;
+        border: 1px solid #059669;
+      }
+      .panel-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+      }
+      .panel-card {
+        background: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 12px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .card-icon { font-size: 32px; }
+      .card-name { font-size: 20px; font-weight: 700; color: #ffffff; }
+      .card-desc { font-size: 14px; color: #94a3b8; }
+
+      /* Scene 3: Schematics Studio */
+      .schem-container {
+        width: 1300px;
+        background: rgba(15, 23, 42, 0.95);
+        border: 2px solid var(--accent-emerald);
+        box-shadow: 0 0 60px rgba(16, 185, 129, 0.35);
+        border-radius: 20px;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 28px;
+      }
+      .schem-hero-title {
+        font-size: 48px;
+        font-weight: 800;
+        color: #ffffff;
+        text-align: center;
+      }
+      .schem-hero-title span { color: var(--accent-emerald); }
+      .schem-pills {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .schem-pill {
+        background: #1e293b;
+        border: 1px solid #334155;
+        color: #f8fafc;
+        font-size: 20px;
+        font-weight: 600;
+        padding: 10px 22px;
+        border-radius: 9999px;
+      }
+      .schem-pill.accent {
+        background: rgba(16, 185, 129, 0.2);
+        border-color: var(--accent-emerald);
+        color: #6ee7b7;
+      }
+      .schem-features {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        width: 100%;
+      }
+      .feat-box {
+        background: #0f172a;
+        border: 1px solid #334155;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+      }
+      .feat-box h4 { font-size: 22px; color: var(--accent-cyan); margin-bottom: 6px; }
+      .feat-box p { font-size: 15px; color: #94a3b8; }
+
+      /* Scene 4: Crossplay & 2-Min Setup */
+      .crossplay-hero {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+      }
+      .device-card {
+        width: 440px;
+        background: #0f172a;
+        border: 2px solid var(--accent-purple);
+        border-radius: 20px;
+        padding: 30px;
+        text-align: center;
+        box-shadow: 0 0 40px rgba(168, 85, 247, 0.3);
+      }
+      .device-icon { font-size: 60px; margin-bottom: 12px; }
+      .device-title { font-size: 28px; font-weight: 800; color: #ffffff; }
+      .device-sub { font-size: 18px; color: #c084fc; margin-top: 6px; }
+      .connect-arrow {
+        font-size: 48px;
+        color: var(--accent-gold);
+        font-weight: 900;
+      }
+      .quick-banner {
+        margin-top: 36px;
+        background: linear-gradient(90deg, #1e1b4b, #312e81);
+        border: 2px solid #6366f1;
+        border-radius: 16px;
+        padding: 16px 40px;
+        font-size: 28px;
+        font-weight: 700;
+        color: #ffffff;
+      }
+
+      /* Scene 5: Outro */
+      .outro-card {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+      }
+      .outro-logo {
+        font-size: 72px;
+        font-weight: 900;
+        letter-spacing: -0.03em;
+        background: linear-gradient(135deg, #38bdf8, #818cf8, #f43f5e);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .outro-sub {
+        font-size: 32px;
+        color: #e2e8f0;
+        max-width: 900px;
+      }
+      .star-btn {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: #000000;
+        font-size: 32px;
+        font-weight: 800;
+        padding: 18px 48px;
+        border-radius: 9999px;
+        box-shadow: 0 0 50px rgba(245, 158, 11, 0.6);
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .gh-link {
+        font-family: monospace;
+        font-size: 24px;
+        color: var(--accent-cyan);
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid #334155;
+        padding: 10px 24px;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="18" data-width="1920" data-height="1080">
+      <audio id="bgm" src="assets/music.mp3" data-start="0" data-duration="18"></audio>
+
+      <!-- SCENE 1: THE HOOK -->
+      <div id="scene1" class="scene">
+        <div class="terminal-box" id="termBox">
+          <div class="term-bar">
+            <div class="dot dot-red"></div>
+            <div class="dot dot-yellow"></div>
+            <div class="dot dot-green"></div>
+          </div>
+          <div>$ ./run.sh</div>
+          <div style="color: #ef4444; margin-top: 6px;">[WARN] Missing configs, ports unmapped, manual commands needed...</div>
+        </div>
+        <h1 class="hook-title" id="hookTitle">Tired of Slow & Painful<br/>Minecraft Server Setups?</h1>
+        <p class="hook-sub" id="hookSub">There is a 10x smarter, faster way to manage everything.</p>
+      </div>
+
+      <!-- SCENE 2: THE REVEAL -->
+      <div id="scene2" class="scene">
+        <div class="panel-hero" id="panelHero">
+          <div class="panel-header">
+            <div class="panel-title">⚔️ MINECRAFT FORGE 1.20.1 ULTIMATE ADMIN PANEL</div>
+            <div class="panel-badge">● 40+ CATEGORIES & LIVE RCON</div>
+          </div>
+          <div class="panel-grid">
+            <div class="panel-card">
+              <div class="card-icon">⚡</div>
+              <div class="card-name">Thread-Safe RCON</div>
+              <div class="card-desc">0-lag command sync, instant execution & reconnect.</div>
+            </div>
+            <div class="panel-card">
+              <div class="card-icon">💰</div>
+              <div class="card-name">Economy & Salaries</div>
+              <div class="card-desc">Scoreboard banking & automated player salary distribution.</div>
+            </div>
+            <div class="panel-card">
+              <div class="card-icon">🏪</div>
+              <div class="card-name">NPC Grand Bazaar</div>
+              <div class="card-desc">6 specialized merchant NPC shops spawned in 1-click.</div>
+            </div>
+            <div class="panel-card">
+              <div class="card-icon">🛡️</div>
+              <div class="card-name">TPS & Anti-Lag</div>
+              <div class="card-desc">Real-time entity wiper, tick optimizer & gamerule shield.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 3: SCHEMATICS STUDIO -->
+      <div id="scene3" class="scene">
+        <div class="schem-container" id="schemBox">
+          <div class="schem-hero-title">
+            🏛️ Schematics Studio <span>(160+ Instant Structures)</span>
+          </div>
+          <div class="schem-pills">
+            <div class="schem-pill accent">Modern Villas</div>
+            <div class="schem-pill">Medieval Castles</div>
+            <div class="schem-pill accent">Redstone Auto-Farms</div>
+            <div class="schem-pill">Nuclear Bunkers</div>
+            <div class="schem-pill accent">PvP Arenas</div>
+            <div class="schem-pill">Skyscrapers</div>
+          </div>
+          <div class="schem-features">
+            <div class="feat-box">
+              <h4>🔄 360° Rotation</h4>
+              <p>0°, 90°, 180°, 270° orientation</p>
+            </div>
+            <div class="feat-box">
+              <h4>🪞 Mirroring</h4>
+              <p>Left-to-right & front-to-back</p>
+            </div>
+            <div class="feat-box">
+              <h4>🧹 Auto-Clear</h4>
+              <p>Cleans foliage & trees first</p>
+            </div>
+            <div class="feat-box">
+              <h4>↩️ 1-Click Undo</h4>
+              <p>Instant block-by-block rollback</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 4: CROSSPLAY & 2-MIN SETUP -->
+      <div id="scene4" class="scene">
+        <div class="crossplay-hero" id="crossplayHero">
+          <div class="device-card">
+            <div class="device-icon">💻</div>
+            <div class="device-title">Java Edition</div>
+            <div class="device-sub">PC / Mac / Linux (25565)</div>
+          </div>
+          <div class="connect-arrow">⇄ GEYSER CROSSPLAY ⇄</div>
+          <div class="device-card">
+            <div class="device-icon">📱</div>
+            <div class="device-title">Bedrock Edition</div>
+            <div class="device-sub">iOS • Android • Consoles (19132)</div>
+          </div>
+        </div>
+        <div class="quick-banner" id="quickBanner">
+          ⚡ 2-Minute 1-Click Setup: setup_server.bat & setup_server.sh
+        </div>
+      </div>
+
+      <!-- SCENE 5: OUTRO -->
+      <div id="scene5" class="scene">
+        <div class="outro-card" id="outroCard">
+          <div class="outro-logo">MINECRAFT CROSSPLAY FORGE 1.20.1</div>
+          <div class="outro-sub">40+ Admin Categories • 160+ Instant Structures • 100% Free & Open Source</div>
+          <div class="star-btn">
+            ⭐ STAR THIS REPO ON GITHUB
+          </div>
+          <div class="gh-link">github.com/toprakahmetaydogmus/minecraft-crossplay-forge-server</div>
+        </div>
+      </div>
+
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+
+      // --- SCENE 1 (0 to 3.5s) ---
+      tl.set("#scene1", { autoAlpha: 1 }, 0);
+      tl.fromTo("#termBox", { y: -40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 0.2);
+      tl.fromTo("#hookTitle", { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.4)" }, 0.6);
+      tl.fromTo("#hookSub", { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 1.0);
+      tl.to("#scene1", { opacity: 0, scale: 0.96, duration: 0.4, ease: "power2.in" }, 3.1);
+      tl.set("#scene1", { autoAlpha: 0 }, 3.5);
+
+      // --- SCENE 2 (3.5 to 7.5s) ---
+      tl.set("#scene2", { autoAlpha: 1 }, 3.5);
+      tl.fromTo("#panelHero", { y: 60, opacity: 0, scale: 0.95 }, { y: 0, opacity: 1, scale: 1, duration: 0.7, ease: "power3.out" }, 3.6);
+      tl.fromTo(".panel-card", { y: 30, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.12, duration: 0.5, ease: "back.out(1.2)" }, 4.0);
+      tl.to("#scene2", { opacity: 0, scale: 1.03, duration: 0.4, ease: "power2.in" }, 7.1);
+      tl.set("#scene2", { autoAlpha: 0 }, 7.5);
+
+      // --- SCENE 3 (7.5 to 12.0s) ---
+      tl.set("#scene3", { autoAlpha: 1 }, 7.5);
+      tl.fromTo("#schemBox", { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "power3.out" }, 7.6);
+      tl.fromTo(".schem-pill", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, stagger: 0.08, duration: 0.4, ease: "back.out(1.5)" }, 8.0);
+      tl.fromTo(".feat-box", { y: 20, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.1, duration: 0.4, ease: "power2.out" }, 8.8);
+      tl.to("#scene3", { opacity: 0, y: -40, duration: 0.4, ease: "power2.in" }, 11.6);
+      tl.set("#scene3", { autoAlpha: 0 }, 12.0);
+
+      // --- SCENE 4 (12.0 to 15.5s) ---
+      tl.set("#scene4", { autoAlpha: 1 }, 12.0);
+      tl.fromTo("#crossplayHero", { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "power3.out" }, 12.1);
+      tl.fromTo("#quickBanner", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "back.out(1.4)" }, 12.7);
+      tl.to("#scene4", { opacity: 0, scale: 0.95, duration: 0.4, ease: "power2.in" }, 15.1);
+      tl.set("#scene4", { autoAlpha: 0 }, 15.5);
+
+      // --- SCENE 5 (15.5 to 18.0s) ---
+      tl.set("#scene5", { autoAlpha: 1 }, 15.5);
+      tl.fromTo("#outroCard", { scale: 0.88, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.7, ease: "elastic.out(1, 0.75)" }, 15.6);
+      tl.fromTo(".star-btn", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(2)" }, 16.2);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+# Bukkit Varsayilan Oyuncu Yetkileri (Java & Bedrock Tum Oyuncular)
+server.default:
+  description: Tum oyuncular icin standart hayatta kalma ve ekonomi yetkileri
+  default: true
+  children:
+    essentials.kit: true
+    essentials.kits.*: true
+    essentials.balance: true
+    essentials.balance.others: true
+    essentials.balancetop: true
+    essentials.pay: true
+    essentials.home: true
+    essentials.sethome: true
+    essentials.delhome: true
+    essentials.sethome.multiple: true
+    essentials.spawn: true
+    essentials.tpa: true
+    essentials.tpaccept: true
+    essentials.tpdeny: true
+    essentials.back: true
+    essentials.back.ondeath: true
+    essentials.msg: true
+    essentials.r: true
+    essentials.ping: true
+    essentials.afk: true
+    essentials.help: true
+    essentials.info: true
+    essentials.feed: true
+    essentials.heal: true
+    essentials.chat.color: true
+    economyshopgui.shop: true
+    economyshopgui.sellall: true
+    economyshopgui.sellall.all: true
+    economyshopgui.sellhand: true
+    economyshopgui.sellgui: true
+    tradesystem.trade: true
+    griefprevention.user: true
+    griefprevention.claims: true
+    griefprevention.createclaims: true
+    griefprevention.buyclaimblocks: true
+    griefprevention.sellclaimblocks: true
+    essentials.vanish: false
+    essentials.vanish.*: false
+    essentials.vanish.see: false

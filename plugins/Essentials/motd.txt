@@ -1,0 +1,5 @@
+&6&l◆ Crossplay Sunucu'ye Hoş Geldiniz! ◆
+&7Java &8+ &bBedrock Crossplay Hayatta Kalma
+&e⚡ Çevrimiçi Oyuncular: &a{ONLINE}&7/&a20
+&a🛒 Akçe Marketi: &e/n &7veya &e/shop &7| &6Patlamaz Arsa: &f/arsa
+&b⛺ Ev: &a/ev &7| &6Güvenli Takas: &e/takas &7| &cRehber: &e/help

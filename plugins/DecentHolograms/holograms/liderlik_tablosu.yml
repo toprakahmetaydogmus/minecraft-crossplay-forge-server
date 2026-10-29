@@ -1,0 +1,30 @@
+name: liderlik_tablosu
+location: world:1275.5:73.5:1473.5
+enabled: true
+display-range: 48
+update-range: 48
+update-interval: 60
+facing: 0.0
+down-origin: false
+pages:
+  - lines:
+      - content: '&6&l🏆 CROSSPLAY SUNUCU LİDERLİK KÜRSÜSÜ 🏆'
+        height: 0.35
+      - content: '&e&lEN ZENGİN 5 VATANDAŞ (AKÇE)'
+        height: 0.3
+      - content: '&7&m-----------------------------'
+        height: 0.25
+      - content: '&e🥇 &61. &f%vault_eco_top_player_1% &8- &a%vault_eco_top_balance_1% Akçe'
+        height: 0.3
+      - content: '&f🥈 &72. &f%vault_eco_top_player_2% &8- &a%vault_eco_top_balance_2% Akçe'
+        height: 0.3
+      - content: '&6🥉 &c3. &f%vault_eco_top_player_3% &8- &a%vault_eco_top_balance_3% Akçe'
+        height: 0.3
+      - content: '&b4. &f%vault_eco_top_player_4% &8- &a%vault_eco_top_balance_4% Akçe'
+        height: 0.3
+      - content: '&b5. &f%vault_eco_top_player_5% &8- &a%vault_eco_top_balance_5% Akçe'
+        height: 0.3
+      - content: '&7&m-----------------------------'
+        height: 0.25
+      - content: '&eBakiye Sıralaması: &f/balancetop &7| &a/para'
+        height: 0.3

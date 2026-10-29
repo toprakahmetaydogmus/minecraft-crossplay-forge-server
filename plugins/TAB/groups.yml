@@ -1,0 +1,56 @@
+_DEFAULT_:
+  tabprefix: "&7[Vatandas] &f"
+  tagprefix: "&7[Vatandas] &f"
+  customtabname: "%player%"
+
+kurucu:
+  tabprefix: "&4&l[Kurucu] &c"
+  tagprefix: "&4&l[Kurucu] &c"
+
+cumhurbaskani:
+  tabprefix: "&c&l[Baskan] &e"
+  tagprefix: "&c&l[Baskan] &e"
+
+muhtar:
+  tabprefix: "&6&l[Muhtar] &f"
+  tagprefix: "&6&l[Muhtar] &f"
+
+polis:
+  tabprefix: "&9&l[Polis] &b"
+  tagprefix: "&9&l[Polis] &b"
+
+asker:
+  tabprefix: "&2&l[Asker] &a"
+  tagprefix: "&2&l[Asker] &a"
+
+doktor:
+  tabprefix: "&c&l[Doktor] &f"
+  tagprefix: "&c&l[Doktor] &f"
+
+hakim:
+  tabprefix: "&5&l[Hakim] &d"
+  tagprefix: "&5&l[Hakim] &d"
+
+mimar:
+  tabprefix: "&3&l[Mimar] &b"
+  tagprefix: "&3&l[Mimar] &b"
+
+tuccar:
+  tabprefix: "&e&l[Tuccar] &6"
+  tagprefix: "&e&l[Tuccar] &6"
+
+madenci:
+  tabprefix: "&8&l[Madenci] &7"
+  tagprefix: "&8&l[Madenci] &7"
+
+ciftci:
+  tabprefix: "&a&l[Ciftci] &2"
+  tagprefix: "&a&l[Ciftci] &2"
+
+sovalye:
+  tabprefix: "&1&l[Sovalye] &9"
+  tagprefix: "&1&l[Sovalye] &9"
+
+vatandas:
+  tabprefix: "&7[Vatandas] &f"
+  tagprefix: "&7[Vatandas] &f"

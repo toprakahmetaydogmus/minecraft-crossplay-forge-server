@@ -1,0 +1,36 @@
+name: spawn_rehber
+location: world:1271.5:73.5:1473.5
+enabled: true
+display-range: 48
+update-range: 48
+update-interval: 20
+facing: 0.0
+down-origin: false
+pages:
+  - lines:
+      - content: '&6&l◆ Crossplay Sunucu ◆'
+        height: 0.35
+      - content: '&e&lSUNUCU BILGI & REHBER'
+        height: 0.3
+      - content: '&7&m-----------------------------'
+        height: 0.25
+      - content: '&a✔ &fMarket Menusu: &e/n &7veya &e/shop'
+        height: 0.3
+      - content: '&a✔ &fArsa Kapatma: &e/arsa &7(Altin Kurek)'
+        height: 0.3
+      - content: '&a✔ &fArsanizi Patlatmak &cIMKANSIZDIR!'
+        height: 0.3
+      - content: '&a✔ &fBaslangic Kiti: &e/kit baslangic'
+        height: 0.3
+      - content: '&a✔ &fGunluk Odul: &e/kit gunluk'
+        height: 0.3
+      - content: '&a✔ &fGuvenli Takas: &e/takas <oyuncu>'
+        height: 0.3
+      - content: '&a✔ &fEv Kaydetme: &e/evkaydet <isim>'
+        height: 0.3
+      - content: '&a✔ &fEve Isinlanma: &e/ev <isim>'
+        height: 0.3
+      - content: '&7&m-----------------------------'
+        height: 0.25
+      - content: '&bBedrock & Mobil Baglanti: &fPort 19132'
+        height: 0.3

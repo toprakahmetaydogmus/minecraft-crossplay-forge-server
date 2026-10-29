@@ -1,0 +1,81 @@
+# Minecraft World, Region and Player Data (STRICT PRIVACY - NEVER COMMIT)
+world/
+world_nether/
+world_the_end/
+*.mca
+*.dat
+*.dat_old
+uid.dat
+session.lock
+
+# Logs and Crash Dumps (CONTAINS REAL PLAYER IPS & SYSTEM DATA)
+logs/
+*.log
+crash-reports/
+debug.log
+installer_stripped.jar.log
+
+# User and Player Caching (Contains Real Player UUIDs and Names)
+usercache.json
+usernamecache.json
+banned-ips.json
+banned-players.json
+whitelist.json
+ops.json
+
+# Plugin Userdata, Transactions & Database Files (Contains Personal IP/PlayerData)
+plugins/**/PlayerData/
+plugins/**/PlayerData/*
+plugins/**/playerdata/
+plugins/**/playerdata/*
+plugins/**/playerdata.yml
+plugins/**/userdata/
+plugins/**/userdata/*
+plugins/**/usermap.csv
+plugins/**/usermap.bin
+plugins/**/uuids.bin
+plugins/**/ClaimData/
+plugins/**/Logs/
+plugins/**/data/
+plugins/**/transactions/
+plugins/**/transaction-log.txt
+plugins/**/tradelog.db
+plugins/**/*.bin
+plugins/**/*.db
+plugins/**/cache/
+plugins/**/skincache.yml
+plugins/bStats/
+plugins/PluginMetrics/
+
+# Server RCON, Secret Keys & Local Configs
+.env
+playit.toml
+playit.gg
+playit-*.exe
+
+# Large Runtimes and Heavy Binary Jars (Provided via 2-min auto-installer)
+java17/
+libraries/
+.arclight/
+arclight-forge-1.20.1.jar
+forge-1.20.1-server.jar
+forge-1.20.1-*-installer.jar
+*.bak
+
+# Python Caches & Environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+*.tmp
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+plugins/ToprakEkoSell.jar
+plugins/CrossplayEkoSell.jar
+

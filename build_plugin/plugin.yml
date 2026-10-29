@@ -1,0 +1,15 @@
+name: CrossplayEkoSell
+version: 1.0.0
+main: com.crossplay.sell.CrossplayEkoSell
+api-version: '1.20'
+depend: [Vault, EconomyShopGUI]
+commands:
+  sell:
+    description: Elinizdeki veya secilen esyayi satar
+    aliases: [sat, sellhand, sathand]
+  sellall:
+    description: Tum envanteri veya secilen esyayi satar
+    aliases: [satall, sathepsi, hepsinisat]
+  akce:
+    description: Akce yonetim ve transfer komutu
+    aliases: [para]

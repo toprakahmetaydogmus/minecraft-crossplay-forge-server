@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "historyId": "c57e2e70-4b2c-48ec-8474-be075524813a",
+  "currentRevision": "9391c9c7-b4b0-42e6-a7f8-fcf7c26d5fc1",
+  "pendingChanges": false,
+  "files": {
+    "hyperframes.json": {
+      "hash": "69d989981677ed7270bc6784d9b3f87c6af07407832d9e951d4c0f4e9e34795c",
+      "content": "C:\\Users\\topra_n3vq63d\\.cache\\hyperframes\\history\\c57e2e70-4b2c-48ec-8474-be075524813a\\blobs\\69\\69d989981677ed7270bc6784d9b3f87c6af07407832d9e951d4c0f4e9e34795c"
+    },
+    "index.html": {
+      "hash": "ea099176a0710382f4fa9e1ee5f2a234449d142860efa66024d4e40e5f5d3fca",
+      "content": "C:\\Users\\topra_n3vq63d\\.cache\\hyperframes\\history\\c57e2e70-4b2c-48ec-8474-be075524813a\\blobs\\ea\\ea099176a0710382f4fa9e1ee5f2a234449d142860efa66024d4e40e5f5d3fca"
+    },
+    "meta.json": {
+      "hash": "a19344d67c7db7fe04d6a10d3ceb809a2b57668a44b8cc16a28d087138cc97db",
+      "content": "C:\\Users\\topra_n3vq63d\\.cache\\hyperframes\\history\\c57e2e70-4b2c-48ec-8474-be075524813a\\blobs\\a1\\a19344d67c7db7fe04d6a10d3ceb809a2b57668a44b8cc16a28d087138cc97db"
+    },
+    "package.json": {
+      "hash": "6331703e1e8d331fef631c028582134e61d6413e256044049e8ae03c90224de1",
+      "content": "C:\\Users\\topra_n3vq63d\\.cache\\hyperframes\\history\\c57e2e70-4b2c-48ec-8474-be075524813a\\blobs\\63\\6331703e1e8d331fef631c028582134e61d6413e256044049e8ae03c90224de1"
+    },
+    "assets/music.mp3": {
+      "hash": "aa56ab1cdcbef6b05566c6a7c114323078580ccf6a740a9e6c6b6c4b40b4389f",
+      "content": "C:\\Users\\topra_n3vq63d\\.cache\\hyperframes\\history\\c57e2e70-4b2c-48ec-8474-be075524813a\\blobs\\aa\\aa56ab1cdcbef6b05566c6a7c114323078580ccf6a740a9e6c6b6c4b40b4389f"
+    }
+  },
+  "revisions": {
+    "9391c9c7-b4b0-42e6-a7f8-fcf7c26d5fc1": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1793265130348,
+      "endedAt": 1793265130349,
+      "files": {
+        "index.html": {
+          "before": "C:\\Users\\topra_n3vq63d\\.cache\\hyperframes\\history\\c57e2e70-4b2c-48ec-8474-be075524813a\\blobs\\4d\\4d2933650d8d0bd2534484bfb1da896544b996bf1edaf15c4a3ddcd479490a2a",
+          "after": "C:\\Users\\topra_n3vq63d\\.cache\\hyperframes\\history\\c57e2e70-4b2c-48ec-8474-be075524813a\\blobs\\ea\\ea099176a0710382f4fa9e1ee5f2a234449d142860efa66024d4e40e5f5d3fca"
+        }
+      }
+    }
+  },
+  "checks": {
+    "latest": {
+      "revision": null,
+      "id": "36cf0988-24df-42b8-b93e-dbbe1adc94ce"
+    },
+    "revisions": {},
+    "unversioned": [
+      {
+        "id": "36cf0988-24df-42b8-b93e-dbbe1adc94ce",
+        "scope": "project",
+        "report": "C:\\Users\\topra_n3vq63d\\.gemini\\antigravity-ide\\scratch\\minecraft_crossplay_forge_server\\brag-output-en\\composition\\.hyperframes\\artifacts\\checks\\36cf0988-24df-42b8-b93e-dbbe1adc94ce.json",
+        "metadata": {
+          "ok": false,
+          "browserSkipped": true,
+          "options": {
+            "samples": 9,
+            "atTransitions": false,
+            "maxIssues": 80,
+            "collapseStatic": true,
+            "tolerance": 2,
+            "timeout": 10000,
+            "contrast": true,
+            "strict": false,
+            "snapshots": false,
+            "browserGpuMode": "auto"
+          }
+        },
+        "createdAt": 1793265081711,
+        "contentHash": "962af8b1ecaff5c3c72b9f103b185d457ac40fb83230f3acbeabc9af346e4917",
+        "revision": null,
+        "inputFingerprint": "106a308f14c8972458a01a1970a2c969730f0e452a3dc438a597ca18410af701",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      }
+    ]
+  },
+  "snapshots": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "renders": {
+    "latest": {
+      "id": "80b59b4b-4c1f-4c06-b2af-1fd859a074a0",
+      "completedAt": 1793265156250,
+      "output": "C:\\Users\\topra_n3vq63d\\.gemini\\antigravity-ide\\scratch\\minecraft_crossplay_forge_server\\brag-output-en\\brag.mp4",
+      "status": "completed",
+      "revision": "9391c9c7-b4b0-42e6-a7f8-fcf7c26d5fc1"
+    },
+    "retainedRevisions": [
+      "9391c9c7-b4b0-42e6-a7f8-fcf7c26d5fc1"
+    ]
+  },
+  "pendingArtifactCleanup": []
+}

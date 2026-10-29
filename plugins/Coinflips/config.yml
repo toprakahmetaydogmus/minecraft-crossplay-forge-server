@@ -1,0 +1,55 @@
+prefix: '<gradient:#FCEF00:#FFF652><bold>CoinFlips</bold></gradient> &7» '
+
+database: # Jar default supports h2; build with -Psqlite or -Pmysql for other types.
+  type: h2
+
+private-games:
+  enabled: true
+  password-length: 4
+
+
+number-formatting:
+  # Number display mode for all bet amounts in messages and GUIs.
+  # mode: 0 — comma separator    →  1,000 / 100,000,000
+  # mode: 1 — short format       →  1k / 100k / 1M / 1B
+  # mode: 2 — space separator    →  1 000 / 100 000 000
+  mode: 0
+  # Pattern used in mode 0 (Java DecimalFormat syntax)
+  formatted: '#,###'
+  short: en_US
+
+update-notifier:
+  enabled: true
+  on-join: true
+  notify-console: true
+
+discord:
+  enabled: false
+  webhook-url: 'https://discord.com/api/webhooks/your-webhook-url'
+  embed:
+    create:
+      title: 'New Coinflip!'
+      description: 'A new coinflip has been created by {player} with a bet of {amount} {currency}.'
+      color: 3447003
+      footer: 'Coinflips'
+
+    win:
+      title: 'Coinflip Won!'
+      description: '{player} has won a coinflip with a bet of {amount} {currency}.'
+      color: 3447003
+      footer: 'Coinflips'
+
+    lose:
+      title: 'Coinflip Lost!'
+      description: '{player} has lost a coinflip with a bet of {amount} {currency}.'
+      color: 15158332
+      footer: 'Coinflips'
+
+coinflip:
+  min-bet: 1000
+  max-bet: 100000000
+  cooldown: 5
+  win-chance: 50
+  multiplier: 2
+
+version: 1

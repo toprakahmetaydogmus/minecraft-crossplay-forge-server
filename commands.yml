@@ -1,0 +1,121 @@
+# Bukkit Commands Yapilandirmasi & Turkce Kisa Komutlar
+command-block-overrides: []
+ignore-vanilla-permissions: false
+
+aliases:
+  icanhasbukkit:
+  - version $1-
+  sellgui:
+  - economyshopgui:sellgui
+  satgui:
+  - economyshopgui:sellgui
+  help:
+  - essentials:info $1-
+  helpme:
+  - essentials:info $1-
+  hewlp:
+  - essentials:info $1-
+  hlp:
+  - essentials:info $1-
+  helep:
+  - essentials:info $1-
+  hepl:
+  - essentials:info $1-
+  helpm:
+  - essentials:info $1-
+  h:
+  - essentials:info $1-
+  yardim:
+  - essentials:info $1-
+  yardım:
+  - essentials:info $1-
+  rehber:
+  - essentials:info $1-
+  komutlar:
+  - essentials:info $1-
+  komut:
+  - essentials:info $1-
+  bilgi:
+  - essentials:info $1-
+  takas:
+  - trade $1-
+  doyur:
+  - essentials:feed
+  - essentials:heal
+  yemek:
+  - essentials:feed
+  arsa:
+  - essentials:kit kurek
+  - essentials:info Arsa
+  guven:
+  - griefprevention:trust $1-
+  guvenkaldir:
+  - griefprevention:untrust $1-
+  arsasil:
+  - griefprevention:abandonclaim
+  arsalarim:
+  - griefprevention:claimslist
+  ev:
+  - essentials:home $1-
+  evkaydet:
+  - essentials:sethome $1-
+  evsil:
+  - essentials:delhome $1-
+  isinlan:
+  - essentials:tpa $1-
+  kabul:
+  - essentials:tpaccept
+  red:
+  - essentials:tpdeny
+  para:
+  - essentials:balance
+  bakiye:
+  - essentials:balance
+  market:
+  - economyshopgui:shop $1-
+  secim:
+  - essentials:info Secim
+  secimler:
+  - essentials:info Secim
+  oy:
+  - me secimde $1- adayi icin oy kullandi!
+  rol:
+  - essentials:info Roller
+  roller:
+  - essentials:info Roller
+  meslek:
+  - essentials:info Roller
+  meslekler:
+  - essentials:info Roller
+  airdrop:
+  - essentials:info Airdrop
+  gorev:
+  - essentials:info Gorevler
+  gorevler:
+  - essentials:info Gorevler
+  quest:
+  - essentials:info Gorevler
+  klan:
+  - essentials:info Klan
+  klanlar:
+  - essentials:info Klan
+  clan:
+  - essentials:info Klan
+  zindan:
+  - essentials:info Zindan
+  boss:
+  - essentials:info Zindan
+  kumar:
+  - casinoroulette:casino $1-
+  casino:
+  - casinoroulette:casino $1-
+  rulet:
+  - casinoroulette:casino $1-
+  slot:
+  - casinoroulette:casino $1-
+  cark:
+  - casinoroulette:casino wheel $1-
+  gunluk:
+  - casinoroulette:casino daily $1-
+  kumartop:
+  - casinoroulette:casino top $1-

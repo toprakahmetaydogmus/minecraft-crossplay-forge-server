@@ -1,0 +1,83 @@
+#Genel
+&6================== &e[ Crossplay Sunucu REHBER ] &6==================
+&e/n &7veya &e/shop &8- &fTurkce Akce Esya Marketini acar.
+&e/sellgui &8- &fEsyalari kutuya koyup topluca satar.
+&e/sellall &8- &fEnvanterinizdeki satilabilir madenleri satar.
+&e/para &7veya &e/bal &8- &fGuncel Akce bakiyenizi gosterir.
+&e/pay <oyuncu> <akce> &8- &fArkadasiniza Akce gonderir.
+&e/kit baslangic &8- &fBaslangic kiti ve 100 Akce verir.
+&e/kit gunluk &8- &fGunde 1 kez 500 Akce hediyesi verir.
+&e/doyur &8- &fAclik barinizi doldurur ve caninizi yeniler.
+&e/spawn &8- &fGuvenli baslangic noktasina isinlar.
+&e/ev &8| &e/evkaydet &8| &e/isinlan <oyuncu> &8| &e/kabul
+&6=============================================================
+
+#Arsa
+&6================== &e[ ARSA & ARAZI KORUMA ] &6==================
+&a1. &fElindeki Altin Kurek ile arazinin 1. kosesine sag tikla.
+&a2. &fCapraz 2. kosesine gidip sag tikla. Alan altin ve tas olur!
+&a3. &fArsaniz &cPATLATILAMAZ&f, &cKIRILAMAZ&f, sandiklariniz acilamaz!
+&e/arsa &8- &fUcretsiz Arsa Kapatma Kuregi verir.
+&e/guven <oyuncu> &8- &fArkadasinizi arsaniza ortak eder.
+&e/guvenkaldir <oyuncu> &8- &fArsanizdaki ortagin yetkisini alir.
+&e/arsasil &8- &fBulundugunuz arsayi terk eder ve siler.
+&e/arsalarim &8- &fTum arsalarinizi ve kalan blok hakkinizi gosterir.
+&6=============================================================
+
+#Secim
+&6================== &e[ DEMOKRASİ & SEÇİMLER ] &6==================
+&eCumhurbaskanligi &6ve &eKoy Muhtarligi &fsecimleri yapilmaktadir.
+&a• &fAday olmak ve oy pusulasi almak icin sandik gorevlisine basvurun.
+&a• &fOy vermek icin: &e/oy <aday_adi>
+&a• &fSecim sandiklarina resmi muhurlu pusulanizi atabilirsiniz.
+&a• &fHer vatandasa oy kullandiktan sonra 500 Akce tesvik odulu verilir!
+&a• &fSecilen kisi resmi unvanina ve ozel tagina kavusur.
+&6=============================================================
+
+#Roller
+&6================== &e[ ROLLER & MESLEKLER ] &6==================
+&c[Baskan] &8- &fCumhurbaskani, devleti ve sunucuyu yonetir.
+&6[Muhtar] &8- &fKoy Muhtari, koyluleri ve arsa islerini duzenler.
+&9[Polis] &8- &fAsayis ve guvenligi saglar, hirsizlari yakalar.
+&2[Asker] &8- &fVatan savunmasi ve sinir guvenligini korur.
+&c[Doktor] &8- &fYaralanan oyunculari iyilestirir ve iksir dagitir.
+&5[Hakim] &8- &fAnlasmazliklari cozer ve adil kararlar verir.
+&3[Mimar] &8- &fSehir projelerini ve gorkemli yapilari insa eder.
+&e[Tuccar] &8- &fPazarda ticaret yapar, esya alip satar.
+&8[Madenci] &8- &fYeralti zenginliklerini ve elmaslari cikarir.
+&a[Ciftci] &8- &fEkinleri ekip bicer, sehri besler.
+&6=============================================================
+
+#Airdrop
+&6================== &e[ 🪂 AİRDROP EVENTİ ] &6==================
+&a• &fGokten rastgele araliklarla zenginlik sandiklari duser!
+&a• &fAirdrop indiginde chatte duyuru gecer ve isaret fisi firlatilir.
+&a• &fIcinde Elmas Bloklari, Netherite ve Akce cekleri bulunur.
+&a• &fSandiga ilk ulasan ve sag tiklayan ganimeti kapar!
+&6=============================================================
+
+#Gorevler
+&6================== &e[ 🎯 GÜNLÜK GÖREVLER ] &6==================
+&a1. Gorev: &f64 Tas veya Komur Kaz &8-> &6+250 Akce
+&a2. Gorev: &f32 Bugday veya Havuc Topla &8-> &6+200 Akce
+&a3. Gorev: &f15 Zombi veya Iskelet Avla &8-> &6+350 Akce
+&a4. Gorev: &f1 Oyuncuyla Guvenli Takas Yap (/takas) &8-> &6+150 Akce
+&7-------------------------------------------------------------
+&eOdul: &fGorevleri bitirince odulunuzu admin panelinden veya yetkiliden talep edin!
+&6=============================================================
+
+#Klan
+&6================== &e[ 🏰 KLANLAR & KRALLIKLAR ] &6==================
+&eKlan Sistemi: &fArkadaslarinizla bir araya gelip guclu bir klan kurabilirsiniz.
+&a• &fKlan uyeleri birbirine vuramaz (Dost atesi kapali).
+&a• &fMevcut Klanlar: &c[Kizil Bayrak]&f, &6[Kurtlar Hanedani]&f, &9[Kartal Kralligi]&f.
+&a• &fKlana katilmak veya yeni klan kurmak icin admin paneline basvurun.
+&a• &fKlan savaslari PvP arenasinda duzenli olarak yapilmaktadir!
+&6=============================================================
+
+#Zindan
+&6================== &e[ ⚔️ BOSS ZİNDANI & KANLI AY ] &6==================
+&4• Kanli Ay: &cGece kirmiziya dondugunde yaratiklar guclenir ve ozel odul verir!
+&6• Antik Boss Zindani: &fYeralti tapinaginda Zindan Lordu uyanir.
+&a• &fBoss'u deviren savascilara 2.000 Akce ve efsanevi zirh odulu dagitilir.
+&6=============================================================

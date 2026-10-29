@@ -1,0 +1,103 @@
+help:
+  - " "
+  - "<gradient:#FCEF00:#FFF652><bold>CoinFlips</bold></gradient> &#FCEF00Aide"
+  - " &#ECE20C➤ &f/coinflips reload &7| &#ECE20CReload the plugin configuration"
+  - " &#ECE20C➤ &f/coinflips create <amount> &7| &#ECE20CCreate a new coinflip game with the specified bet"
+  - " &#ECE20C➤ &f/coinflips join <id> &7| &#ECE20CJoin an existing coinflip game by its ID"
+  - " &#ECE20C➤ &f/coinflips stats [player] &7| &#ECE20CView your or another player's coinflip statistics"
+  - " &#ECE20C➤ &f/coinflips top &7| &#ECE20CView the coinflip leaderboard"
+  - " &#ECE20C➤ &f/coinflips private [amount] &7| &#ECE20CCreate a private coinflip game with an optional bet"
+  - " &#ECE20C➤ &f/coinflips help &7| &#ECE20CShow this help message"
+  - " &#ECE20C➤ &f/coinflips update &7| &#ECE20CCheck for plugin updates"
+
+reload:
+  success: "&#65FF4D&l✔ &#65FF4DPlugin reloaded successfully!"
+  failed: "&#FF4D4D&l✘ &#FF4D4DFailed to reload the plugin! An error is present in the file &#FF0D0D%file%&#FF4D4D!"
+
+commands:
+  invalid-value: "&#FF4D4D&l✘ &#FF4D4DInvalid parameter: &#FF0D0D%value%"
+  invalid-command: "&#FF4D4D&l✘ &#FF4D4DInvalid command or subcommand! (Try tab completion)"
+  no-permission: "&#FF4D4D&l✘ &#FF4D4DYou do not have permission to use this command!"
+  out-of-range: "&#FF4D4D&l✘ &#FF4D4DThe number &#FF0D0D%number%&#FF4D4D must be between &#FF0D0D%min%&#FF4D4D and &#FF0D0D%max%&#FF4D4D!"
+  player-only: "&#FF4D4D&l✘ &#FF4D4DYou must be a player to use this command!"
+  invalid-player: "&#FF4D4D&l✘ &#FF4D4DThe player &#FF0D0D%player%&#FF4D4D was not found!"
+  already-in-game: "&#FF4D4D&l✘ &#FF4D4DYou are already in a game!"
+  game-not-found: "&#FF4D4D&l✘ &#FF4D4DGame not found!"
+  game-not-waiting: "&#FF4D4D&l✘ &#FF4D4DGame is no longer waiting for players!"
+  private-disabled: "&#FF4D4D&l✘ &#FF4D4DPrivate games are disabled!"
+  cannot-join-own: "&#FF4D4D&l✘ &#FF4D4DYou cannot join your own game!"
+  no-game-to-cancel: "&#FF4D4D&l✘ &#FF4D4DYou don't have an active game to cancel!"
+  cannot-cancel-running: "&#FF4D4D&l✘ &#FF4D4DYou cannot cancel a game that is already running!"
+  not-enough-money: "&#FF4D4D&l✘ &#FF4D4DYou don't have enough money! You need &#FF0D0D%amount%&#FF4D4D %currency%!"
+  invalid-bet: "&#FF4D4D&l✘ &#FF4D4DThe bet must be a positive number!"
+
+stats:
+  format:
+    - " "
+    - "&#ECE20CStatistics for &f%player%"
+    - "&#ECE20C➤ &7Wins: &a%wins%"
+    - "&#ECE20C➤ &7Losses: &c%losses%"
+    - "&#ECE20C➤ &7Ratio: &e%ratio%%"
+    - "&#ECE20C➤ &7Total Bet: &f%total_bet%"
+    - "&#ECE20C➤ &7Profit: &b%profit%"
+    - " "
+
+top:
+  header: "&#ECE20C&lTop 10 Players"
+  format: "&6#%position% &f%player% &7- Wins: &a%wins% &7- Profit: &b%profit%"
+
+gui:
+  open-failed: "&#FF4D4D&l✘ &#FF4D4DFailed to open GUI!"
+
+cancel:
+  success: "&#65FF4D&l✔ &#65FF4DYour game has been cancelled. Your bet of &#FF0D0D%amount%&#65FF4D %currency% has been refunded!"
+
+create:
+  success: "&#65FF4D&l✔ &#65FF4DGame created successfully with a bet of &#FF0D0D%amount%&#65FF4D %currency%!"
+  failed: "&#FF4D4D&l✘ &#FF4D4DFailed to create game! Please try again later."
+
+join:
+  success: "&#65FF4D&l✔ &#65FF4DYou have successfully joined the game created by &#FF0D0D%creator%&#65FF4D with a bet of &#FF0D0D%amount%&#65FF4D %currency%!"
+  failed: "&#FF4D4D&l✘ &#FF4D4DFailed to join game! Please try again later."
+
+private:
+  success: "&#65FF4D&l✔ &#65FF4DPrivate game created successfully with a bet of &#FF0D0D%amount%&#65FF4D %currency%! Share the game ID &#FF0D0D%id%&#65FF4D with your friend!"
+  failed: "&#FF4D4D&l✘ &#FF4D4DFailed to create private game! Please try again later."
+
+results:
+  win: "&#65FF4D&l✔ &#65FF4DCongratulations! You won the coinflip and earned &#FF0D0D%amount%&#65FF4D %currency%!"
+  lose: "&#FF4D4D&l✘ &#FF4D4DSorry, you lost the coinflip and lost &#FF0D0D%amount%&#65FF4D %currency%!"
+
+start:
+  success: "&#65FF4D&l✔ &#65FF4DThe game has started! Good luck to both players!"
+  failed: "&#FF4D4D&l✘ &#FF4D4DFailed to start the game! Please try again later."
+  countdown: "&#FCEF00&l✔ &#FCEF00The game will start in &#FF0D0D%seconds%&#FCEF00 seconds... Get ready!"
+
+broadcast:
+  - '&#FCEF00Coinflips Big Win'
+  - '&#FCEF00&l%winner%&#FCEF00 &fjust won a coinflip of &#FFF55E%amount%&#FCEF00 %currency%!'
+  - '&fTry your luck with /coinflips!'
+
+input:
+  invalid-number: "&#FF4D4D&l✘ &#FF4D4DInvalid number: &#FF0D0D%input%&#FF4D4D! Please enter a valid number."
+  prompt-bet: "&#FCEF00&l? &#FCEF00Enter your bet amount (between &#FF0D0D%min%&#FCEF00 and &#FF0D0D%max%&#FCEF00):"
+  prompt-private: "&#FCEF00&l? &#FCEF00Enter the bet amount for the private game (between &#FF0D0D%min%&#FCEF00 and &#FF0D0D%max%&#FCEF00):"
+
+challenge:
+  request: "&#FCEF00&l? &#FCEF00%challenger%&#FCEF00 has challenged you to a coinflip with a bet of &#FF0D0D%amount%&#FCEF00 %currency%! Do you accept?"
+  accept: "&#65FF4D&l✔ &#65FF4DYou accepted the challenge from &#FF0D0D%challenger%&#65FF4D!"
+  decline: "&#FF4D4D&l✘ &#FF4D4DYou declined the challenge from &#FF0D0D%challenger%&#FF4D4D!"
+  expired: "&#FF4D4D&l✘ &#FF4D4DThe challenge from &#FF0D0D%challenger%&#FF4D4D has expired!"
+  accepted: "&#65FF4D&l✔ &#65FF4D%player%&#65FF4D accepted the challenge!"
+  declined: "&#FF4D4D&l✘ &#FF4D4D%player%&#FF4D4D declined the challenge!"
+  timeout: "&#FF4D4D&l✘ &#FF4D4DThe challenge from &#FF0D0D%challenger%&#FF4D4D has expired!"
+  target-offline: "&#FF4D4D&l✘ &#FF4D4DThe player &#FF0D0D%target%&#FF4D4D is offline!"
+
+update-notifier:
+  checking: "&#FCEF00&l⟳ &#FCEF00Checking for updates..."
+  available: "&#FCEF00&l! &#FCEF00A new version is available! &#DDDDDD(&#FFFFFFcurrent: &#FF4D4D%current%&#DDDDDD | &#FFFFFFlatest: &#65FF4D%latest%&#DDDDDD) &#7→ &fhttps://modrinth.com/plugin/JkR9vvuk"
+  up-to-date: "&#65FF4D&l✔ &#65FF4DYou are running the latest version! &#DDDDDD(&#FFFFFF%current%&#DDDDDD)"
+  check-failed: "&#FF4D4D&l✘ &#FF4D4DFailed to check for updates. Check your internet connection."
+
+version: 1
+

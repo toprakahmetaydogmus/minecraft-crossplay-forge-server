@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "historyId": "876ecb59-7126-4863-b8c4-5a8ef659dd30",
+  "currentRevision": null,
+  "pendingChanges": false,
+  "files": {
+    "hyperframes.json": {
+      "hash": "6333ccf23ae66f5097071dd9ffe95e313107681164819e5ff7b7273a68b44e11",
+      "content": "C:\\Users\\topra_n3vq63d\\.cache\\hyperframes\\history\\876ecb59-7126-4863-b8c4-5a8ef659dd30\\blobs\\63\\6333ccf23ae66f5097071dd9ffe95e313107681164819e5ff7b7273a68b44e11"
+    },
+    "index.html": {
+      "hash": "bae289597ec295300c33b4b7211cb2c2a7397740d8420db9c4fb5b92cfa8ba23",
+      "content": "C:\\Users\\topra_n3vq63d\\.cache\\hyperframes\\history\\876ecb59-7126-4863-b8c4-5a8ef659dd30\\blobs\\ba\\bae289597ec295300c33b4b7211cb2c2a7397740d8420db9c4fb5b92cfa8ba23"
+    },
+    "meta.json": {
+      "hash": "b67d86ea7e5e47cd6c32b27fbeefc6c61747a5fd3b5ceb97bb8a8b52660f2560",
+      "content": "C:\\Users\\topra_n3vq63d\\.cache\\hyperframes\\history\\876ecb59-7126-4863-b8c4-5a8ef659dd30\\blobs\\b6\\b67d86ea7e5e47cd6c32b27fbeefc6c61747a5fd3b5ceb97bb8a8b52660f2560"
+    },
+    "package.json": {
+      "hash": "0a98022973b1318b97dd5f5faf00b1b128caa27f5c55ad5799d2ec9c3c89df4a",
+      "content": "C:\\Users\\topra_n3vq63d\\.cache\\hyperframes\\history\\876ecb59-7126-4863-b8c4-5a8ef659dd30\\blobs\\0a\\0a98022973b1318b97dd5f5faf00b1b128caa27f5c55ad5799d2ec9c3c89df4a"
+    },
+    "assets/music.mp3": {
+      "hash": "aa56ab1cdcbef6b05566c6a7c114323078580ccf6a740a9e6c6b6c4b40b4389f",
+      "content": "C:\\Users\\topra_n3vq63d\\.cache\\hyperframes\\history\\876ecb59-7126-4863-b8c4-5a8ef659dd30\\blobs\\aa\\aa56ab1cdcbef6b05566c6a7c114323078580ccf6a740a9e6c6b6c4b40b4389f"
+    }
+  },
+  "revisions": {},
+  "checks": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "snapshots": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "renders": {
+    "latest": {
+      "id": "24720b0a-46b1-4afb-a4d9-f8afa9d0a7b9",
+      "completedAt": 1793265258002,
+      "output": "C:\\Users\\topra_n3vq63d\\.gemini\\antigravity-ide\\scratch\\minecraft_crossplay_forge_server\\brag-output-tr\\brag.mp4",
+      "status": "completed",
+      "revision": null
+    },
+    "retainedRevisions": []
+  },
+  "pendingArtifactCleanup": []
+}

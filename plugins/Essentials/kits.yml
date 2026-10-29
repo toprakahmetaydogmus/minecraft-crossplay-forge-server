@@ -1,0 +1,56 @@
+# EssentialsX Kit Yapilandirmasi
+# Baslangic, Gunluk Odul, Madenci, Savasci ve Kurek Kitleri
+
+kits:
+  baslangic:
+    delay: -1
+    items:
+      - stonesword 1
+      - stonepickaxe 1
+      - stoneaxe 1
+      - stoneshovel 1
+      - goldenshovel 1 name:&6Arsa_Kuregi lore:&7Bu_kurekle_iki_koseye|&7sag_tiklayarak_arsa_kapat!
+      - cookedbeef 16
+      - torch 32
+    commands:
+      - eco give {player} 100
+
+  gunluk:
+    delay: 86400
+    items:
+      - goldenapple 1
+      - bread 16
+      - ironingot 8
+      - fireworkrocket 4
+    commands:
+      - eco give {player} 500
+
+  madenci:
+    delay: 3600
+    items:
+      - ironpickaxe 1 efficiency:1 durability:1
+      - torch 64
+      - waterbucket 1
+      - bread 16
+
+  savasci:
+    delay: 3600
+    items:
+      - ironsword 1 damage:1
+      - shield 1
+      - bow 1
+      - arrow 32
+      - cookedbeef 16
+
+  tools:
+    delay: 300
+    items:
+      - stonesword 1
+      - stoneshovel 1
+      - stonepickaxe 1
+      - stoneaxe 1
+
+  kurek:
+    delay: 30
+    items:
+      - goldenshovel 1 name:&6Arsa_Kuregi lore:&7Bu_kurekle_iki_koseye|&7sag_tiklayarak_arsa_kapat!

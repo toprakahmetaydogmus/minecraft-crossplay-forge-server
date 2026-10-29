@@ -1,0 +1,6 @@
+# Xmx and Xms set the maximum and minimum RAM usage, respectively.
+# Optimized for 3GB Max RAM Server Usage
+-Xms1536M
+-Xmx3072M
+-Duser.timezone=Europe/Istanbul
+-Dfile.encoding=UTF-8

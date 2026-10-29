@@ -1,0 +1,19 @@
+
+["VeinMiner Settings"]
+	#Max blocks to break at once
+	#Range: 1 ~ 1024
+	maxBlocks = 128
+	#Apply Fortune/Silk Touch to drops
+	applyEnchantments = true
+	#Clump XP into a single orb to reduce lag
+	clumpXp = true
+	#Hunger exhausted per block broken
+	#Range: 0.0 ~ 1.0
+	exhaustionPerBlock = 0.005
+	#Enable hunger cost when mining
+	enableHunger = true
+	#Teleport all drops to the player/first block
+	teleportDrops = true
+	#Enable tool durability protection (Master Switch)
+	enableToolProtection = true
+
